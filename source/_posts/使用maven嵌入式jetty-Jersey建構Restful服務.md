@@ -1,7 +1,7 @@
 ---
 title: 使用maven嵌入式jetty+Jersey建構Restful服務
 categories:
-	- java
+	- Java
 	- WebService
 comments: true
 date: 2019-03-23 11:57:34
