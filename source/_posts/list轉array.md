@@ -1,7 +1,7 @@
 ---
 title: list轉array
 categories:
- - java
+ - Java
  - ClassCastException
 
 comments: true
