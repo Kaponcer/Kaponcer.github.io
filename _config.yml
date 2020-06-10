@@ -102,6 +102,3 @@ theme: next7
 deploy:
   type: git
   repo: https://github.com/Kaponcer/Kaponcer.github.io.git
-
-
-  
