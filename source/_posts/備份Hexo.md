@@ -3,7 +3,7 @@ title: 備份Hexo
 categories: 
  - hexo
 comments: true
-date: 2020-06-10 21:54:38
+date: 2020-06-12 11:54:38
 tags:
  - hexo
  - next theme
@@ -39,11 +39,18 @@ git push --setupstream=origin/hexo
 
 # 還原 #
 
+```bash
+  hexo init
+  mkdir gitback
+  cd ../..
+  git checkout hexo
+  #切換到hexo分支(之前備份到這裡的分支)
+  #根據不同的情況看下面的作法
+  ```
 1. 備份的版本跟新地點一樣
    
-   執行hexo init，直接clone覆蓋就可以了
-
+   覆蓋就可以了
 
 2. 備份的版本比新地點還舊
    
-    執行hexo init，將舊的_config.yml逐一對照新的_config.yml，逐一修改在新的＿config.yml上．並確認您的模組及theme是否還會正常．例如：hexo-math在Hexo4.1之後就會出現出錯.(需要找其他替代模組)
+   將舊的_config.yml逐一對照新的_config.yml，逐一修改在新的＿config.yml上．並確認您的模組及theme是否還會正常．例如：hexo-math在Hexo4.1之後就會出現出錯.(需要找其他替代模組)
