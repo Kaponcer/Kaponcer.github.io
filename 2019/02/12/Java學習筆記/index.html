@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"kaponcer.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="筆者序　　本文件是以學習筆記的概念為基礎，用於自我的複習紀錄，不過也開放各位的概念指證．畢竟學習過程中難免會出現觀念錯誤的問題．也感謝各位的觀念指證．   安裝JDK 在Oracle網站中找自己系統的JDK下載位置 設定 PATH windows10 &#x3D;&gt;本機&#x3D;&gt;右鍵內容&#x3D;&gt;進階系統設定&#x3D;&gt;進階&#x3D;&gt;環境變數 設定   第一個程式Hello World  123456">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java學習筆記(基本語法)">
+<meta property="og:url" content="https://kaponcer.github.io/index.html/2019/02/12/Java%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/index.html">
+<meta property="og:site_name" content="精 簡">
+<meta property="og:description" content="筆者序　　本文件是以學習筆記的概念為基礎，用於自我的複習紀錄，不過也開放各位的概念指證．畢竟學習過程中難免會出現觀念錯誤的問題．也感謝各位的觀念指證．   安裝JDK 在Oracle網站中找自己系統的JDK下載位置 設定 PATH windows10 &#x3D;&gt;本機&#x3D;&gt;右鍵內容&#x3D;&gt;進階系統設定&#x3D;&gt;進階&#x3D;&gt;環境變數 設定   第一個程式Hello World  123456">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2019-02-12T11:07:49.000Z">
+<meta property="article:modified_time" content="2020-06-12T03:22:04.066Z">
+<meta property="article:author" content="Kaponcer">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="未完全">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://kaponcer.github.io/index.html/2019/02/12/Java%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>Java學習筆記(基本語法) | 精 簡</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">精 簡</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">個人筆記部落格</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>歸檔</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://kaponcer.github.io/index.html/2019/02/12/Java%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Kaponcer">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="精 簡">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java學習筆記(基本語法)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2019-02-12 19:07:49" itemprop="dateCreated datePublished" datetime="2019-02-12T19:07:49+08:00">2019-02-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2020-06-12 11:22:04" itemprop="dateModified" datetime="2020-06-12T11:22:04+08:00">2020-06-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <ul>
+<li><h1 id="筆者序"><a href="#筆者序" class="headerlink" title="筆者序"></a>筆者序</h1>　　本文件是以學習筆記的概念為基礎，用於自我的複習紀錄，不過也開放各位的概念指證．畢竟學習過程中難免會出現觀念錯誤的問題．也感謝各位的觀念指證．</li>
+</ul>
+<ul>
+<li><h1 id="安裝JDK"><a href="#安裝JDK" class="headerlink" title="安裝JDK"></a>安裝JDK</h1><ol>
+<li>在Oracle網站中找自己系統的JDK<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" title="" target="">下載位置</a></li>
+<li>設定 PATH windows10 =&gt;本機=&gt;右鍵內容=&gt;進階系統設定=&gt;進階=&gt;環境變數 設定</li>
+</ol>
+</li>
+<li><h1 id="第一個程式Hello-World"><a href="#第一個程式Hello-World" class="headerlink" title="第一個程式Hello World"></a>第一個程式Hello World</h1>  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Hello World =&gt;Java的單行註解方式</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorld</span></span>&#123;</span><br><span class="line">    <span class="comment">/** </span></span><br><span class="line"><span class="comment">        程式的預設的進入點，</span></span><br><span class="line"><span class="comment">        必須是public static，</span></span><br><span class="line"><span class="comment">        另外這是Java的多行註解方式．</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span></span>&#123;</span><br><span class="line">        <span class="comment">// 在console輸出Hello World</span></span><br><span class="line">        System.out.println(<span class="string">"Hello World"</span>);</span><br><span class="line">    &#125;<span class="comment">//main-end</span></span><br><span class="line"> &#125;<span class="comment">//HelloWorld class-end</span></span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+</li>
+<li><h1 id="基本型別與變數宣告"><a href="#基本型別與變數宣告" class="headerlink" title="基本型別與變數宣告"></a>基本型別與變數宣告</h1></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">型別類別</th>
+<th align="center">資料型態</th>
+<th align="center">位元組數(byte)</th>
+<th align="center">資料範圍(range)</th>
+<th align="center">初始值(非預設值)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">字元</td>
+<td align="center">char(Unicode)</td>
+<td align="center">2</td>
+<td align="center">‘\u0000’<del>‘\uFFFF’ 0</del>65535</td>
+<td align="center">‘\u0000’</td>
+</tr>
+<tr>
+<td align="center">整數</td>
+<td align="center">byte</td>
+<td align="center">1</td>
+<td align="center">-128 ~ 127</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">short</td>
+<td align="center">2</td>
+<td align="center">-32768 ~ 32767</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">int</td>
+<td align="center">4</td>
+<td align="center">$-2^{31}$ ~ $2^{31}$-1</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">long</td>
+<td align="center">8</td>
+<td align="center">$-2^{63}$ ~ $2^{63}$-1</td>
+<td align="center">0L</td>
+</tr>
+<tr>
+<td align="center">浮點數</td>
+<td align="center">float</td>
+<td align="center">4</td>
+<td align="center">-3.4E+38 ~ 1.4E-45</td>
+<td align="center">0.0F</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">double</td>
+<td align="center">8</td>
+<td align="center">-1.7E+308 ~ 4.9E-324</td>
+<td align="center">0.0D</td>
+</tr>
+<tr>
+<td align="center">布林</td>
+<td align="center">boolean</td>
+<td align="center">1</td>
+<td align="center">true or false</td>
+<td align="center">false</td>
+</tr>
+</tbody></table>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 數值資料範圍</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DataRange</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[]args)</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"byte range: "</span> + Byte.MIN_VALUE + <span class="string">" ~ "</span> + Byte.MAX_VALUE);</span><br><span class="line">        System.out.println(<span class="string">"short range: "</span> + Short.MIN_VALUE + <span class="string">" ~ "</span> + Short.MAX_VALUE);</span><br><span class="line">        System.out.println(<span class="string">"int range: "</span> + Integer.MIN_VALUE + <span class="string">" ~ "</span> + Integer.MAX_VALUE); </span><br><span class="line">        System.out.println(<span class="string">"long range: "</span> + Long.MIN_VALUE + <span class="string">" ~ "</span> + Long.MAX_VALUE);  </span><br><span class="line">        System.out.println(<span class="string">"float range: "</span> + Float.MIN_VALUE + <span class="string">" ~ "</span> + Float.MAX_VALUE); </span><br><span class="line">        System.out.println(<span class="string">"double range: "</span> + Double.MIN_VALUE + <span class="string">" ~ "</span> + Double.MAX_VALUE);</span><br><span class="line">    &#125;<span class="comment">//main-end</span></span><br><span class="line">&#125;<span class="comment">//class-end</span></span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<ul>
+<li><h1 id="存取修飾字元-Modifier-存取權限"><a href="#存取修飾字元-Modifier-存取權限" class="headerlink" title="存取修飾字元(Modifier)存取權限"></a>存取修飾字元(Modifier)存取權限</h1></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="left">存取修飾字元</th>
+<th align="center">同一class中</th>
+<th align="center">同一Package中</th>
+<th align="center">子類別</th>
+<th align="center">不同Package</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">private</td>
+<td align="center">yes</td>
+<td align="center">no</td>
+<td align="center">no</td>
+<td align="center">no</td>
+</tr>
+<tr>
+<td align="left">default</td>
+<td align="center">yes</td>
+<td align="center">yes</td>
+<td align="center">no</td>
+<td align="center">no</td>
+</tr>
+<tr>
+<td align="left">protected</td>
+<td align="center">yes</td>
+<td align="center">yes</td>
+<td align="center">yes</td>
+<td align="center">(yes) 繼承才能使用</td>
+</tr>
+<tr>
+<td align="left">public</td>
+<td align="center">yes</td>
+<td align="center">yes</td>
+<td align="center">yes</td>
+<td align="center">yes</td>
+</tr>
+</tbody></table>
+<p> 除了<strong>內部類別（Inner class）</strong>外，一般外部類別只能使用default 或 public 的存取權限</p>
+<ul>
+<li><h1 id="變數宣告"><a href="#變數宣告" class="headerlink" title="變數宣告"></a>變數宣告</h1><p>規則：變數名稱的第一個字元必須是英文字母，底線［_］或［$］其中之一</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">[存取修飾字元] [型別] [變數名稱];</span></span><br><span class="line"><span class="comment">[存取修飾字元] [型別] [變數名稱] = [值]; */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">int</span> test;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">int</span> num = <span class="number">10</span>;</span><br></pre></td></tr></table></figure></li>
+<li><h1 id="final"><a href="#final" class="headerlink" title="final"></a>final</h1><p>規則：同變數宣告一樣，不過在中間加了final關鍵字，指的是這個變數只能設定一次，起始值即是最終值．</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">[存取修飾字元] final [型別] [變數名稱] = [值]; */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> num = <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><h1 id="靜態-static"><a href="#靜態-static" class="headerlink" title="靜態[static]"></a>靜態[static]</h1><p>對於一些類別中的物件裡，目的在於”分享該物件”，而這時候就可以使用static修飾字了</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line"><span class="comment">//使用final static 時變數名稱第一個字元必須為大寫</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">int</span> PI = <span class="number">3.1416</span>;</span><br><span class="line"><span class="comment">//此System的console靜態方法不需要實體化System就可以使用．</span></span><br><span class="line"> Console console = System.console();</span><br><span class="line"><span class="comment">//全程式裡面共享唯一一個的PI值.</span></span><br><span class="line"><span class="keyword">double</span> PI = Math.PI;</span><br></pre></td></tr></table></figure>
+<p>靜態的部分牽扯到跨類別問題，這裡只簡單講解一下．詳細請參考<a href="https://openhome.cc/Gossip/Java/Static.html" title="" target="">良葛格Java學習筆記&quot;關於靜態&quot;</a></p>
+</li>
+</ul>
+<ul>
+<li><h1 id="運算子"><a href="#運算子" class="headerlink" title="運算子"></a>運算子</h1><ul>
+<li><h3 id="算術運算子"><a href="#算術運算子" class="headerlink" title="算術運算子"></a>算術運算子</h3></li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">運算子</th>
+<th align="left">名稱</th>
+<th align="left">運算子種類</th>
+<th align="left">備註</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">+</td>
+<td align="left">正號</td>
+<td align="left">單元</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="left">加法</td>
+<td align="left">雙元</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="center">-</td>
+<td align="left">負號</td>
+<td align="left">單元</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="left">減法</td>
+<td align="left">雙元</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="center">*</td>
+<td align="left">乘法</td>
+<td align="left">雙元</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="center">/</td>
+<td align="left">除法</td>
+<td align="left">雙元</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="center">%</td>
+<td align="left">餘數</td>
+<td align="left">雙元</td>
+<td align="left">浮點數也可使用</td>
+</tr>
+<tr>
+<td align="center">++</td>
+<td align="left">遞增</td>
+<td align="left">雙元</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="center">- -</td>
+<td align="left">遞減</td>
+<td align="left">雙元</td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<p>   遞增(++)與遞減(–)的範例 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span> b = <span class="number">0</span>;</span><br><span class="line">b = a++ - a++ + ++a ;</span><br><span class="line">System.out.println(<span class="string">"a = "</span>+ a +<span class="string">" b = "</span> + b);</span><br><span class="line"><span class="comment">/** 解法</span></span><br><span class="line"><span class="comment">=&gt;b = a(++) - a(++) + (++)a</span></span><br><span class="line"><span class="comment">=&gt;b = a(0+1) - a(1+1) + (2+1)a  ,a=3</span></span><br><span class="line"><span class="comment">=&gt;b = 0      - 1      +      3 </span></span><br><span class="line"><span class="comment">=&gt; a = 3, b=2</span></span><br><span class="line"><span class="comment">**/</span></span><br><span class="line"><span class="keyword">int</span> c = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span> d = <span class="number">0</span>;</span><br><span class="line">d = c-- - c-- + --c ;</span><br><span class="line">System.out.println(<span class="string">"c = "</span> + c + <span class="string">" d = "</span>+ d );</span><br><span class="line"><span class="comment">/** 解法</span></span><br><span class="line"><span class="comment">=&gt;d = c(--) - c(--) + (--)c</span></span><br><span class="line"><span class="comment">=&gt;d = c(-1) - c(-2) + (-3)c , c =-3 </span></span><br><span class="line"><span class="comment">=&gt;d = 0     - -1    +     -3</span></span><br><span class="line"><span class="comment">=&gt;c = -3 , d = -2;</span></span><br><span class="line"><span class="comment">**/</span></span><br><span class="line"><span class="keyword">int</span> e = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span> f = <span class="number">0</span>;</span><br><span class="line">f = --e - e-- + --e ;</span><br><span class="line">System.out.println(<span class="string">"e = "</span> + e + <span class="string">" f = "</span>+ f );</span><br><span class="line"><span class="comment">/** 解法</span></span><br><span class="line"><span class="comment">=&gt;f = (--)e - e(--) + (--)e</span></span><br><span class="line"><span class="comment">=&gt;f = (-1)e - e(-2) + (-3)e   ,e=-3</span></span><br><span class="line"><span class="comment">=&gt;f =     -1-(-1)   +     -3 ,f=-3</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">**/</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><h3 id="關係運算子"><a href="#關係運算子" class="headerlink" title="關係運算子"></a>關係運算子</h3></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">運算子</th>
+<th align="left">說明</th>
+<th align="left">範例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">==</td>
+<td align="left">等於</td>
+<td align="left">a==b</td>
+</tr>
+<tr>
+<td align="center">!=</td>
+<td align="left">不等於</td>
+<td align="left">a!=b</td>
+</tr>
+<tr>
+<td align="center">&gt;</td>
+<td align="left">大於</td>
+<td align="left">a&gt;b</td>
+</tr>
+<tr>
+<td align="center">&lt;</td>
+<td align="left">小於</td>
+<td align="left">a&gt;b</td>
+</tr>
+<tr>
+<td align="center">&gt;=</td>
+<td align="left">大於等於</td>
+<td align="left">a&gt;=b</td>
+</tr>
+<tr>
+<td align="center">&lt;=</td>
+<td align="left">小於等於</td>
+<td align="left">a&gt;=b</td>
+</tr>
+</tbody></table>
+<ul>
+<li><h3 id="邏輯運算子"><a href="#邏輯運算子" class="headerlink" title="邏輯運算子"></a>邏輯運算子</h3><table><tbody><th>運算子</th><th>說明</th><th>範例</th><tr><td>&</td><td>AND</td><td>a&b</td></tr><tr><td>|</td><td>OR</td><td>a|b</td></tr><tr><td>!</td><td>NOT</td><td>!a</td></tr><tr><td colspan="3">(短路)Short-circuit Operator </td></tr><tr><td>&&</td><td>AND</td><td>a&&b</td></tr><tr><td>||</td><td>OR</td><td>a||b</td></tr></tbody></table>
+
+<p>&amp; and &amp;&amp; 與 | and ||的分別<br>程式小技巧，這點十分重要，因為在程式中邏輯判斷十分常見到，如果在邏輯運算中需要執行算數運算時，保險一點建議使用非short-circuit的邏輯運算子</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x = <span class="number">0</span>,y=<span class="number">1</span>;</span><br><span class="line">System.out.println(<span class="string">"(x&gt;y)&amp;(++x&gt;y)=&gt;"</span>+Boolean.toString((x&gt;y)&amp;(++x&gt;y)));</span><br><span class="line">System.out.println(<span class="string">"before x = 0,y = 1,after x = "</span>+x+<span class="string">", y = "</span>+y);</span><br><span class="line">x=<span class="number">0</span>;</span><br><span class="line">y=<span class="number">1</span>;</span><br><span class="line">System.out.println(<span class="string">"(x&gt;y)&amp;(++x&gt;y)=&gt;"</span>+Boolean.toString((x&gt;y)&amp;&amp;(++x&gt;y)));</span><br><span class="line">System.out.println(<span class="string">"before x = 0,y = 1,after x = "</span>+x+<span class="string">", y = "</span>+y);</span><br><span class="line">x=<span class="number">0</span>;</span><br><span class="line">y=<span class="number">1</span>;</span><br><span class="line">System.out.println(<span class="string">"(x&lt;y)|(++x==y)=&gt;"</span>+Boolean.toString((x&lt;y)|(++x==y)));</span><br><span class="line">System.out.println(<span class="string">"before x = 0,y = 1,after x = "</span>+x+<span class="string">", y = "</span>+y);</span><br><span class="line">x=<span class="number">0</span>;</span><br><span class="line">y=<span class="number">1</span>;</span><br><span class="line">System.out.println(<span class="string">"(x&lt;y)||(++x==y)=&gt;"</span>+Boolean.toString((x&lt;y)||(++x==y)));</span><br><span class="line">System.out.println(<span class="string">"before x = 0,y = 1,after x = "</span>+x+<span class="string">", y = "</span>+y);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><h3 id="位元運算子，位移運算子"><a href="#位元運算子，位移運算子" class="headerlink" title="位元運算子，位移運算子"></a>位元運算子，位移運算子</h3><p>//先記錄,晚點再看,20190217</p>
+<table><tbody><th>運算子</th><th>說明</th><th>範例</th><tr><td>&</td><td>AND</td><td>a&b</td></tr><tr><td>|</td><td>OR</td><td>a|b</td></tr><tr><td>^</td><td>XOR</td><td>a^b</td></tr><tr><td>~</td><td>補數</td><td>a ~ b</td></tr><tr><td>>></td><td>位元右移</td><td>a>>b</td></tr><tr><td><<</td><td>位元左移</td><td>a<<b</td></tr><tr><td>>>></td><td>邏輯右移</td><td>a>>>b</td></tr></tbody></table>
+//先記錄,晚點再看,20190217
+</li>
+<li><h3 id="指定運算子"><a href="#指定運算子" class="headerlink" title="指定運算子"></a>指定運算子</h3><table><tbody><th>運算子</th><th>說明</th><th>範例</th><tr><td>=</td><td>基本指定</td><td>a=b</td></tr><tr><td>+=</td><td>加法指定</td><td>a+=b  => a=a+b</td></tr><tr><td>-=</td><td>減法指定</td><td>a+=b  => a=a-b</td></tr><tr><td>*=</td><td>乘法指定</td><td>a*=b  => a=a * b</td></tr><tr><td>/=</td><td>除法指定</td><td>a/=b  => a=a / b</td></tr><tr><td>%=</td><td>餘數指定</td><td>a%=b  => a=a % b</td></tr><tr><td>&=</td><td>AND指定</td><td>a&=b => a=a & b</td></tr><tr><td>|=</td><td>OR指定</td><td>a|=b => a=a | b</td></tr><tr><td>^=</td><td>XOR指定</td><td>a^=b => a=a ^ b</td></tr><tr><td>>>=</td><td>位元右移指定</td><td>a>>=b => a=a>>b</td></tr><tr><td><<=</td><td>位元左移指定</td><td>a<<=b => a=a<<b</td></tr><tr><td>>>>=</td><td>邏輯右移指定</td><td>a>>>=b => a=a>>>b</td></tr></tbody></table>
+</li>
+<li><h3 id="三元運算子"><a href="#三元運算子" class="headerlink" title="三元運算子"></a>三元運算子</h3><p>三元基本上可以說是if-else條件的簡化版<br>變數 = (boolean exp) ? true-value : false-value</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">if</span> (x==<span class="number">0</span>)&#123;</span><br><span class="line">    x+=<span class="number">1</span>;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    x-=<span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//等同於</span></span><br><span class="line">x = (x==<span class="number">0</span>) ? x+<span class="number">1</span> : x-<span class="number">1</span> ;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/java/" rel="tag"># java</a>
+              <a href="/tags/%E6%9C%AA%E5%AE%8C%E5%85%A8/" rel="tag"># 未完全</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/02/10/hexo%E7%AD%86%E8%A8%98/" rel="prev" title="hexo筆記">
+      <i class="fa fa-chevron-left"></i> hexo筆記
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/02/17/Java%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98-%E6%8E%A7%E5%88%B6/" rel="next" title="Java學習筆記(控制)">
+      Java學習筆記(控制) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#筆者序"><span class="nav-number">1.</span> <span class="nav-text">筆者序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安裝JDK"><span class="nav-number">2.</span> <span class="nav-text">安裝JDK</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第一個程式Hello-World"><span class="nav-number">3.</span> <span class="nav-text">第一個程式Hello World</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基本型別與變數宣告"><span class="nav-number">4.</span> <span class="nav-text">基本型別與變數宣告</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#存取修飾字元-Modifier-存取權限"><span class="nav-number">5.</span> <span class="nav-text">存取修飾字元(Modifier)存取權限</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#變數宣告"><span class="nav-number">6.</span> <span class="nav-text">變數宣告</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#final"><span class="nav-number">7.</span> <span class="nav-text">final</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#靜態-static"><span class="nav-number">8.</span> <span class="nav-text">靜態[static]</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#運算子"><span class="nav-number">9.</span> <span class="nav-text">運算子</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#算術運算子"><span class="nav-number">9.0.1.</span> <span class="nav-text">算術運算子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#關係運算子"><span class="nav-number">9.0.2.</span> <span class="nav-text">關係運算子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#邏輯運算子"><span class="nav-number">9.0.3.</span> <span class="nav-text">邏輯運算子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#位元運算子，位移運算子"><span class="nav-number">9.0.4.</span> <span class="nav-text">位元運算子，位移運算子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指定運算子"><span class="nav-number">9.0.5.</span> <span class="nav-text">指定運算子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三元運算子"><span class="nav-number">9.0.6.</span> <span class="nav-text">三元運算子</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Kaponcer</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Kaponcer</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

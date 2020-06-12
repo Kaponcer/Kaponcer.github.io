@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"kaponcer.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="情境目前用嵌入式jetty練習Servlet，在學習過程中發現Restful 服務這個名詞，並發現這個Jersey這個實作服務．這個筆記紀錄如何使用Jersey，在嵌入式jetty搭建Restful api服務．">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用maven嵌入式jetty+Jersey建構Restful服務">
+<meta property="og:url" content="https://kaponcer.github.io/index.html/2019/03/23/%E4%BD%BF%E7%94%A8maven%E5%B5%8C%E5%85%A5%E5%BC%8Fjetty-Jersey%E5%BB%BA%E6%A7%8BRestful%E6%9C%8D%E5%8B%99/index.html">
+<meta property="og:site_name" content="精 簡">
+<meta property="og:description" content="情境目前用嵌入式jetty練習Servlet，在學習過程中發現Restful 服務這個名詞，並發現這個Jersey這個實作服務．這個筆記紀錄如何使用Jersey，在嵌入式jetty搭建Restful api服務．">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2019-03-23T03:57:34.000Z">
+<meta property="article:modified_time" content="2020-06-12T03:22:04.074Z">
+<meta property="article:author" content="Kaponcer">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="jetty">
+<meta property="article:tag" content="embeded">
+<meta property="article:tag" content="maven">
+<meta property="article:tag" content="jersey">
+<meta property="article:tag" content="restful">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://kaponcer.github.io/index.html/2019/03/23/%E4%BD%BF%E7%94%A8maven%E5%B5%8C%E5%85%A5%E5%BC%8Fjetty-Jersey%E5%BB%BA%E6%A7%8BRestful%E6%9C%8D%E5%8B%99/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>使用maven嵌入式jetty+Jersey建構Restful服務 | 精 簡</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">精 簡</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">個人筆記部落格</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>歸檔</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://kaponcer.github.io/index.html/2019/03/23/%E4%BD%BF%E7%94%A8maven%E5%B5%8C%E5%85%A5%E5%BC%8Fjetty-Jersey%E5%BB%BA%E6%A7%8BRestful%E6%9C%8D%E5%8B%99/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Kaponcer">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="精 簡">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          使用maven嵌入式jetty+Jersey建構Restful服務
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2019-03-23 11:57:34" itemprop="dateCreated datePublished" datetime="2019-03-23T11:57:34+08:00">2019-03-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2020-06-12 11:22:04" itemprop="dateModified" datetime="2020-06-12T11:22:04+08:00">2020-06-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/WebService/" itemprop="url" rel="index"><span itemprop="name">WebService</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="情境"><a href="#情境" class="headerlink" title="情境"></a>情境</h2><p>目前用嵌入式jetty練習Servlet，在學習過程中發現Restful 服務這個名詞，並發現這個Jersey這個實作服務．<br>這個筆記紀錄如何使用Jersey，在嵌入式jetty搭建Restful api服務．</p>
+<a id="more"></a>
+
+<h2 id="環境"><a href="#環境" class="headerlink" title="環境"></a>環境</h2><ol>
+<li>jetty 9.4.15</li>
+<li>Jersey 2.28</li>
+<li>Java 1.8</li>
+</ol>
+<h2 id="步驟"><a href="#步驟" class="headerlink" title="步驟"></a>步驟</h2><ol>
+<li><p>在pom.xml設定相關要下載的套件</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-server --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.eclipse.jetty<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jetty-server<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>9.4.15.v20190215<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-servlet --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.eclipse.jetty<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jetty-servlet<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>9.4.15.v20190215<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/org.glassfish.jersey.containers/jersey-container-servlet --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.glassfish.jersey.containers<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jersey-container-servlet<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>2.28<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.glassfish.jersey.inject<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jersey-hk2<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>2.28<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>建立伺服器</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Server server = <span class="keyword">new</span> Server();</span><br><span class="line">ServerConnector http = <span class="keyword">new</span> ServerConnector(server);</span><br><span class="line">http.setHost(<span class="string">"localhost"</span>);</span><br><span class="line">http.setPort(<span class="number">8080</span>);</span><br><span class="line">http.setIdleTimeout(<span class="number">30000</span>);</span><br><span class="line">server.addConnector(http);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 配置靜態網頁Handler</span></span><br><span class="line">ServletContextHandler context = <span class="keyword">new</span> ServletContextHandler(ServletContextHandler.NO_SESSIONS);</span><br><span class="line">context.setContextPath(<span class="string">"/"</span>);</span><br><span class="line">context.setWelcomeFiles(<span class="keyword">new</span> String[] &#123; <span class="string">"index.html"</span> &#125;);</span><br><span class="line"></span><br><span class="line">ServletHolder def = context.addServlet(DefaultServlet.class, "/");</span><br><span class="line">def.setInitParameter(<span class="string">"resourceBase"</span>, <span class="string">"./http/"</span>);</span><br><span class="line">def.setInitParameter(<span class="string">"dirAllowed"</span>, <span class="string">"false"</span>);</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ol>
+<ol start="3">
+<li>設定Restful api相關配置<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// api 提供的路徑</span></span><br><span class="line">ServletHolder apiHolder = context.addServlet(ServletContainer.class, "/api/*");</span><br><span class="line">apiHolder.setInitOrder(<span class="number">1</span>);</span><br><span class="line"><span class="comment">// 提供api的packagex路徑</span></span><br><span class="line">apiHolder.setInitParameter(<span class="string">"jersey.config.server.provider.packages"</span>, </span><br><span class="line">			<span class="string">"idv.kaponcer.RoEAnalyze.model.api"</span>);</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 也可以單獨載入類別</span></span><br><span class="line"><span class="comment">* jerseyServlet.setInitParameter("jersey.config.server.provider.classnames",</span></span><br><span class="line"><span class="comment">   *           "UploadFileService;Packege.className");</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">HandlerList handlers = <span class="keyword">new</span> HandlerList();</span><br><span class="line">handlers.addHandler(context);</span><br><span class="line"></span><br><span class="line">server.setHandler(handlers);</span><br></pre></td></tr></table></figure>
+<h2 id="備份筆記"><a href="#備份筆記" class="headerlink" title="備份筆記"></a>備份筆記</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 筆記備份,來源至底</span></span><br><span class="line">	Server jettyServer = <span class="keyword">new</span> Server();</span><br><span class="line">	HttpConfiguration http_config = <span class="keyword">new</span> HttpConfiguration();</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 *http_config可以对服务器进行配置，比如设置https,BufferSize等等</span></span><br><span class="line"><span class="comment">	 *        http_config.setSecureScheme("https");</span></span><br><span class="line"><span class="comment">	 *        http_config.setSecurePort(8443);</span></span><br><span class="line"><span class="comment">	 *        http_config.setOutputBufferSize(32768);</span></span><br><span class="line"><span class="comment">	 *        http_config.setRequestHeaderSize(8192);</span></span><br><span class="line"><span class="comment">	 *        http_config.setResponseHeaderSize(8192);</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	http_config.setSendServerVersion(<span class="keyword">true</span>);</span><br><span class="line">	http_config.setSendDateHeader(<span class="keyword">false</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 新建http连接来设置访问端口，超时时间等等。</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	ServerConnector httpServer = <span class="keyword">new</span> ServerConnector(jettyServer,</span><br><span class="line">			<span class="keyword">new</span> HttpConnectionFactory(http_config));</span><br><span class="line">	httpServer.setPort(<span class="number">7012</span>);</span><br><span class="line">	httpServer.setIdleTimeout(<span class="number">120000</span>);</span><br><span class="line">	jettyServer.addConnector(httpServer);</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 设置整个web服务的根url，/ 表示 localhost:7012/  之后地址的是可访问的</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	ServletContextHandler context = <span class="keyword">new</span> ServletContextHandler(ServletContextHandler.SESSIONS);</span><br><span class="line">	context.setContextPath(<span class="string">"/"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 添加动态servlet路径，处理我们自己写的动态的servlet</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	ServletHolder jerseyServlet = context.addServlet(</span><br><span class="line">			org.glassfish.jersey.servlet.ServletContainer.class, "/webapi/*");</span><br><span class="line">	jerseyServlet.setInitOrder(<span class="number">1</span>);</span><br><span class="line">	<span class="comment">// Tells the Jersey Servlet which REST api/class to load.设置动态servlt加载的包</span></span><br><span class="line">	jerseyServlet.setInitParameter(<span class="string">"jersey.config.server.provider.packages"</span>, <span class="string">"com.heu.cs.api"</span>);</span><br><span class="line">	<span class="comment">//也可单独设置加载某个类，</span></span><br><span class="line">	 jerseyServlet.setInitParameter(<span class="string">"jersey.config.server.provider.classnames"</span>,</span><br><span class="line">			<span class="string">"UploadFileService;org.glassfish.jersey.media.multipart.MultiPartFeature"</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 添加默认的servlet路径，处理不在动态servlet路径中的地址，一般都是一些可供访问的静态html,css,js资源文件</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	ServletHolder staticServlet = context.addServlet(DefaultServlet.class, "/static/*");</span><br><span class="line">	staticServlet.setInitParameter(<span class="string">"resourceBase"</span>, <span class="string">"src/main/resources"</span>);</span><br><span class="line">	staticServlet.setInitParameter(<span class="string">"pathInfoOnly"</span>, <span class="string">"true"</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * Embedded Jetty还可以直接当作服务器，在上面部署已经发布的war包，这方面的资料国内挺多的，就不累述</span></span><br><span class="line"><span class="comment">	 * </span></span><br><span class="line"><span class="comment">	 * 其次，在我们的项目中是没有用到web.xml文件来进行webappde的配置，因为上面的设置并不能使得服务器访问web.xml，</span></span><br><span class="line"><span class="comment">	 * 如果需要用到web.xml，则需要new一个WebAppContext,并对其进行配置，同时在下面的handlers中加上webAppContext</span></span><br><span class="line"><span class="comment">	 *  WebAppContext webAppContext = new WebAppContext();</span></span><br><span class="line"><span class="comment">	 *  设置描述符位置</span></span><br><span class="line"><span class="comment">	 *  webAppContext.setDescriptor("./web/WEB-INF/web.xml");</span></span><br><span class="line"><span class="comment">	 *  设置Web内容上下文路径</span></span><br><span class="line"><span class="comment">	 *  webAppContext.setResourceBase("./web");</span></span><br><span class="line"><span class="comment">	 *  设置上下文路径</span></span><br><span class="line"><span class="comment">	 *  webAppContext.setContextPath("/");</span></span><br><span class="line"><span class="comment">	 *  webAppContext.setParentLoaderPriority(true);</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	</span><br><span class="line">	HandlerCollection handlers = <span class="keyword">new</span> HandlerCollection();</span><br><span class="line">	<span class="comment">// handlers.setHandlers(new Handler[]&#123;context,webAppContext&#125;);</span></span><br><span class="line">	handlers.setHandlers(<span class="keyword">new</span> Handler[]&#123;context&#125;);</span><br><span class="line">	jettyServer.setHandler(handlers);</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		jettyServer.start();</span><br><span class="line">		jettyServer.join();</span><br><span class="line">	&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">		jettyServer.destroy();</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="來源"><a href="#來源" class="headerlink" title="來源"></a>來源</h2><p>Jetty 官方文件 用來看基本的範例<br>(這是快照版本的說明，個人感覺比正式版好看一點，如果被官方砍掉了就只能看正式版的文件)</p>
+<a href="https://www.eclipse.org/jetty/documentation/9.4.x/embedding-jetty.html" title="" target="">Embedding-Jetty</a>
+
+
+<p>大陸的程序員撰寫的教學，關於嵌入式Jetty+Jersey Restful服務</p>
+<a href="https://www.jianshu.com/p/764fcdffc28a" title="" target="">IDEA+Maven+Embedded Jetty+Jersey构建Restful服务并打包成jar包发布</a>
+
+
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/java/" rel="tag"># java</a>
+              <a href="/tags/jetty/" rel="tag"># jetty</a>
+              <a href="/tags/embeded/" rel="tag"># embeded</a>
+              <a href="/tags/maven/" rel="tag"># maven</a>
+              <a href="/tags/jersey/" rel="tag"># jersey</a>
+              <a href="/tags/restful/" rel="tag"># restful</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/03/21/list%E8%BD%89array/" rel="prev" title="list轉array">
+      <i class="fa fa-chevron-left"></i> list轉array
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/06/12/%E5%82%99%E4%BB%BDHexo/" rel="next" title="備份Hexo">
+      備份Hexo <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#情境"><span class="nav-number">1.</span> <span class="nav-text">情境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#環境"><span class="nav-number">2.</span> <span class="nav-text">環境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#步驟"><span class="nav-number">3.</span> <span class="nav-text">步驟</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#備份筆記"><span class="nav-number">4.</span> <span class="nav-text">備份筆記</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#來源"><span class="nav-number">5.</span> <span class="nav-text">來源</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Kaponcer</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Kaponcer</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

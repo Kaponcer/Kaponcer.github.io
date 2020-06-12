@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"kaponcer.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="立即重新開機1$ shutdown -r now     立即關機1$ shutdown -h now">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux入門常用指令(Debian系列的Linux預設軟體儲藏庫)">
+<meta property="og:url" content="https://kaponcer.github.io/index.html/2019/02/10/linux%E6%8C%87%E4%BB%A4-Ubuntu/index.html">
+<meta property="og:site_name" content="精 簡">
+<meta property="og:description" content="立即重新開機1$ shutdown -r now     立即關機1$ shutdown -h now">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2019-02-10T05:35:00.000Z">
+<meta property="article:modified_time" content="2020-06-12T03:22:04.072Z">
+<meta property="article:author" content="Kaponcer">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="ubuntu">
+<meta property="article:tag" content="Debian">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://kaponcer.github.io/index.html/2019/02/10/linux%E6%8C%87%E4%BB%A4-Ubuntu/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>linux入門常用指令(Debian系列的Linux預設軟體儲藏庫) | 精 簡</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">精 簡</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">個人筆記部落格</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>歸檔</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://kaponcer.github.io/index.html/2019/02/10/linux%E6%8C%87%E4%BB%A4-Ubuntu/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Kaponcer">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="精 簡">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          linux入門常用指令(Debian系列的Linux預設軟體儲藏庫)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2019-02-10 13:35:00" itemprop="dateCreated datePublished" datetime="2019-02-10T13:35:00+08:00">2019-02-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2020-06-12 11:22:04" itemprop="dateModified" datetime="2020-06-12T11:22:04+08:00">2020-06-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/Debian/" itemprop="url" rel="index"><span itemprop="name">Debian</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/Debian/Ubuntu/" itemprop="url" rel="index"><span itemprop="name">Ubuntu</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <ul>
+<li><h3 id="立即重新開機"><a href="#立即重新開機" class="headerlink" title="立即重新開機"></a>立即重新開機</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> shutdown -r now</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<ul>
+<li><h3 id="立即關機"><a href="#立即關機" class="headerlink" title="立即關機"></a>立即關機</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> shutdown -h now</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<a id="more"></a>
+
+<ul>
+<li><h3 id="切換目前所在的目錄位址"><a href="#切換目前所在的目錄位址" class="headerlink" title="切換目前所在的目錄位址"></a>切換目前所在的目錄位址</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> [資料夾位址] </span></span><br><span class="line"><span class="meta">  #</span><span class="bash">Example</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> ../tmp   <span class="comment">#切換到上一頁的tmp資料夾下</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> ./tmp2   <span class="comment">#切換到本頁內的tmp2資料夾下</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> /tmp     <span class="comment">#切換到根目錄下的tmp資料夾下</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> ~        <span class="comment">#切換到目前的家目錄</span></span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<ul>
+<li><h3 id="建立一個空白的檔案-某方面來說還蠻實用的"><a href="#建立一個空白的檔案-某方面來說還蠻實用的" class="headerlink" title="建立一個空白的檔案(某方面來說還蠻實用的)"></a>建立一個空白的檔案(某方面來說還蠻實用的)</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> touch [路徑/檔名]</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<ul>
+<li><h3 id="用vi編輯器來開啟檔案"><a href="#用vi編輯器來開啟檔案" class="headerlink" title="用vi編輯器來開啟檔案"></a>用vi編輯器來開啟檔案</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> vi [路徑/檔名]</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<ul>
+<li><h3 id="移動檔案或資料夾在指定的地方-可用於修改檔名及資料夾名稱"><a href="#移動檔案或資料夾在指定的地方-可用於修改檔名及資料夾名稱" class="headerlink" title="移動檔案或資料夾在指定的地方(可用於修改檔名及資料夾名稱)"></a>移動檔案或資料夾在指定的地方(可用於修改檔名及資料夾名稱)</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mv [來源路徑/檔案]  [目地路徑/檔案]</span></span><br><span class="line"><span class="meta">#</span><span class="bash">Example </span></span><br><span class="line"><span class="meta">#</span><span class="bash">將目前所在的資料夾下的abc.txt檔修改成def.txt檔</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> mv ./abc.txt ./def.txt</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<ul>
+<li><h3 id="刪除檔案-無法刪除資料夾"><a href="#刪除檔案-無法刪除資料夾" class="headerlink" title="刪除檔案(無法刪除資料夾"></a>刪除檔案(無法刪除資料夾</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> rm [路徑/檔案]</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<ul>
+<li><h3 id="遞迴刪除某資料夾-某方面很重要"><a href="#遞迴刪除某資料夾-某方面很重要" class="headerlink" title="遞迴刪除某資料夾 (某方面很重要)"></a>遞迴刪除某資料夾 (某方面很重要)</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> rm -r [路徑/資料夾]</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<ul>
+<li><h3 id="新增資料夾"><a href="#新增資料夾" class="headerlink" title="新增資料夾"></a>新增資料夾</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mkdir [路徑/資料夾名]</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<ul>
+<li><h3 id="刪除資料夾"><a href="#刪除資料夾" class="headerlink" title="刪除資料夾"></a>刪除資料夾</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> rmdir [路徑/資料夾]</span></span><br><span class="line"><span class="meta">#</span><span class="bash">如果資料夾下有資料則無法刪除。</span></span><br><span class="line"><span class="meta">#</span><span class="bash">如果要刪除整個資料夾則使用rm -r</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<ul>
+<li><h3 id="解壓縮-tar-gz-檔案到-目的資料夾"><a href="#解壓縮-tar-gz-檔案到-目的資料夾" class="headerlink" title="解壓縮 .tar.gz 檔案到 目的資料夾"></a>解壓縮 .tar.gz 檔案到 目的資料夾</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> tar zxvf [路徑/檔名] -C [目的路徑/資料夾]</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<ul>
+<li><h3 id="使用debian系列的linux的軟體儲藏庫來安裝軟體"><a href="#使用debian系列的linux的軟體儲藏庫來安裝軟體" class="headerlink" title="使用debian系列的linux的軟體儲藏庫來安裝軟體"></a>使用debian系列的linux的軟體儲藏庫來安裝軟體</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> apt-get install [軟體關鍵字]</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<ul>
+<li><h3 id="更新軟體儲藏庫資料"><a href="#更新軟體儲藏庫資料" class="headerlink" title="更新軟體儲藏庫資料"></a>更新軟體儲藏庫資料</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> apt-get update</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<ul>
+<li><h3 id="更新已安裝的軟體"><a href="#更新已安裝的軟體" class="headerlink" title="更新已安裝的軟體"></a>更新已安裝的軟體</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> apt-get upgrade</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<ul>
+<li><h3 id="使用debian系列的linux的軟體儲藏庫來移除軟體"><a href="#使用debian系列的linux的軟體儲藏庫來移除軟體" class="headerlink" title="使用debian系列的linux的軟體儲藏庫來移除軟體"></a>使用debian系列的linux的軟體儲藏庫來移除軟體</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> apt-get remove [軟體關鍵字]</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<ul>
+<li><h3 id="清除無用的安裝資料"><a href="#清除無用的安裝資料" class="headerlink" title="清除無用的安裝資料"></a>清除無用的安裝資料</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> apt-get autoclean</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<ul>
+<li><h3 id="移除無用的相依性套件"><a href="#移除無用的相依性套件" class="headerlink" title="移除無用的相依性套件"></a>移除無用的相依性套件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> apt-get autoremove</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<ul>
+<li><h3 id="暫時使用有限制權限的root身份執行-指定的指令"><a href="#暫時使用有限制權限的root身份執行-指定的指令" class="headerlink" title="暫時使用有限制權限的root身份執行[指定的指令]"></a>暫時使用有限制權限的root身份執行[指定的指令]</h3>通常用於apt-get  rm </li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo [指令]</span></span><br><span class="line"><span class="meta">#</span><span class="bash">Example</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo apt-get install git-core</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 暫時使用有限制權限的root身份安裝git-core 套件及相關套件</span></span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li><h3 id="切換到root身分"><a href="#切換到root身分" class="headerlink" title="切換到root身分"></a>切換到root身分</h3>剛開始學盡量少用，可能會導致不可復原的問題，包含操作失敗導致系統出錯、產生出系統漏洞．<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo su</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+              <a href="/tags/ubuntu/" rel="tag"># ubuntu</a>
+              <a href="/tags/Debian/" rel="tag"># Debian</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2019/02/10/hexo%E7%AD%86%E8%A8%98/" rel="next" title="hexo筆記">
+      hexo筆記 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#立即重新開機"><span class="nav-number">1.</span> <span class="nav-text">立即重新開機</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#立即關機"><span class="nav-number">2.</span> <span class="nav-text">立即關機</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#切換目前所在的目錄位址"><span class="nav-number">3.</span> <span class="nav-text">切換目前所在的目錄位址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建立一個空白的檔案-某方面來說還蠻實用的"><span class="nav-number">4.</span> <span class="nav-text">建立一個空白的檔案(某方面來說還蠻實用的)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用vi編輯器來開啟檔案"><span class="nav-number">5.</span> <span class="nav-text">用vi編輯器來開啟檔案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#移動檔案或資料夾在指定的地方-可用於修改檔名及資料夾名稱"><span class="nav-number">6.</span> <span class="nav-text">移動檔案或資料夾在指定的地方(可用於修改檔名及資料夾名稱)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#刪除檔案-無法刪除資料夾"><span class="nav-number">7.</span> <span class="nav-text">刪除檔案(無法刪除資料夾</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#遞迴刪除某資料夾-某方面很重要"><span class="nav-number">8.</span> <span class="nav-text">遞迴刪除某資料夾 (某方面很重要)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新增資料夾"><span class="nav-number">9.</span> <span class="nav-text">新增資料夾</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#刪除資料夾"><span class="nav-number">10.</span> <span class="nav-text">刪除資料夾</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解壓縮-tar-gz-檔案到-目的資料夾"><span class="nav-number">11.</span> <span class="nav-text">解壓縮 .tar.gz 檔案到 目的資料夾</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用debian系列的linux的軟體儲藏庫來安裝軟體"><span class="nav-number">12.</span> <span class="nav-text">使用debian系列的linux的軟體儲藏庫來安裝軟體</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更新軟體儲藏庫資料"><span class="nav-number">13.</span> <span class="nav-text">更新軟體儲藏庫資料</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更新已安裝的軟體"><span class="nav-number">14.</span> <span class="nav-text">更新已安裝的軟體</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用debian系列的linux的軟體儲藏庫來移除軟體"><span class="nav-number">15.</span> <span class="nav-text">使用debian系列的linux的軟體儲藏庫來移除軟體</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#清除無用的安裝資料"><span class="nav-number">16.</span> <span class="nav-text">清除無用的安裝資料</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#移除無用的相依性套件"><span class="nav-number">17.</span> <span class="nav-text">移除無用的相依性套件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#暫時使用有限制權限的root身份執行-指定的指令"><span class="nav-number">18.</span> <span class="nav-text">暫時使用有限制權限的root身份執行[指定的指令]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#切換到root身分"><span class="nav-number">19.</span> <span class="nav-text">切換到root身分</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Kaponcer</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Kaponcer</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

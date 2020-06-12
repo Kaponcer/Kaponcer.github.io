@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"kaponcer.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="TarBall安裝步驟TarBall安裝是Unix-like 的一種安裝方式，主要由三個步驟所構成：  下載原始碼並解壓縮12download sourcetar zxf source -C doc 設定安裝參數1.&#x2F;configure …... 編譯及安裝12makemake install">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux tarball安裝">
+<meta property="og:url" content="https://kaponcer.github.io/index.html/2019/02/17/linux-tarball%E5%AE%89%E8%A3%9D/index.html">
+<meta property="og:site_name" content="精 簡">
+<meta property="og:description" content="TarBall安裝步驟TarBall安裝是Unix-like 的一種安裝方式，主要由三個步驟所構成：  下載原始碼並解壓縮12download sourcetar zxf source -C doc 設定安裝參數1.&#x2F;configure …... 編譯及安裝12makemake install">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2019-02-17T11:18:32.000Z">
+<meta property="article:modified_time" content="2020-06-12T03:22:04.071Z">
+<meta property="article:author" content="Kaponcer">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="tarball">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://kaponcer.github.io/index.html/2019/02/17/linux-tarball%E5%AE%89%E8%A3%9D/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>linux tarball安裝 | 精 簡</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">精 簡</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">個人筆記部落格</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>歸檔</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://kaponcer.github.io/index.html/2019/02/17/linux-tarball%E5%AE%89%E8%A3%9D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Kaponcer">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="精 簡">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          linux tarball安裝
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2019-02-17 19:18:32" itemprop="dateCreated datePublished" datetime="2019-02-17T19:18:32+08:00">2019-02-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2020-06-12 11:22:04" itemprop="dateModified" datetime="2020-06-12T11:22:04+08:00">2020-06-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="TarBall安裝步驟"><a href="#TarBall安裝步驟" class="headerlink" title="TarBall安裝步驟"></a>TarBall安裝步驟</h4><p>TarBall安裝是Unix-like 的一種安裝方式，主要由三個步驟所構成：</p>
+<ol>
+<li>下載原始碼並解壓縮<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">download source</span><br><span class="line">tar zxf source -C doc</span><br></pre></td></tr></table></figure></li>
+<li>設定安裝參數<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./configure …...</span><br></pre></td></tr></table></figure></li>
+<li>編譯及安裝<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<a id="more"></a>
+
+<h4 id="至於為什麼要使用TarBall來安裝軟體呢"><a href="#至於為什麼要使用TarBall來安裝軟體呢" class="headerlink" title="至於為什麼要使用TarBall來安裝軟體呢?"></a>至於為什麼要使用TarBall來安裝軟體呢?</h4><p>在於Unix-like系統的軟體通常都會先釋出原始碼來讓使用者測試，等一段時間後一些線上更新的伺服器才會把它們編譯並包裝起來來供人更新。<br>但是使用者有時候想自己使用最新的版本的軟體該怎樣辦。這時候就要使用TarBall的方式來安裝。<br>由於TarBall安裝是使用原始碼來安裝，所以有時候會有相依性問題以及編譯器問題要自行解決，若沒必要不建議使用TarBall安裝的方式。以免自行移除的麻煩性。</p>
+<p>這裡要講要如何好管理TarBall安裝的軟體，這是在使用Unix-like系統之前就要決定的事項，否則胡亂安裝，會導致更新及移除的麻煩。</p>
+<h4 id="軟體安裝目錄及規劃"><a href="#軟體安裝目錄及規劃" class="headerlink" title="軟體安裝目錄及規劃"></a>軟體安裝目錄及規劃</h4><ol>
+<li>/usr<br> 通常是放置發行版所包裝的軟體位置<br> 在這裡通常放置各使用者會用到的共同軟體，大多的情況不會使用tarball安裝．</li>
+<li>/usr/local<br> 過去放置第三方軟體的地方，內含多個子目錄如：bin、lib…等等<br> 現在定義為放置自行撰寫的程式或系統．</li>
+<li>/opt<br> 放置第三方軟體的地方，</li>
+<li>/home/usr<br> 使用者的家目錄，為個人使用軟體的放置位置</li>
+</ol>
+<p>規劃</p>
+<table>
+<thead>
+<tr>
+<th align="left">目錄</th>
+<th align="left">目的</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">/usr/local</td>
+<td align="left">放置自行開發上線的軟體</td>
+</tr>
+<tr>
+<td align="left">/usr/local/lib</td>
+<td align="left">放置自行開發的軟體所需要的相依性套件(函式庫)</td>
+</tr>
+<tr>
+<td align="left">/opt/[softwareName]</td>
+<td align="left">放置tarball安裝的軟體</td>
+</tr>
+<tr>
+<td align="left">/opt/lib</td>
+<td align="left">放置tarball安裝的函式庫</td>
+</tr>
+<tr>
+<td align="left">/opt/src</td>
+<td align="left">放置tarball安裝軟體的原始碼</td>
+</tr>
+<tr>
+<td align="left">/home/usr</td>
+<td align="left">放置測試自行開發的軟體</td>
+</tr>
+<tr>
+<td align="left">/home/usr/src</td>
+<td align="left">放置測試自行開發的軟體原始碼</td>
+</tr>
+<tr>
+<td align="left">/home/usr/lib</td>
+<td align="left">放置測試自行開發的相依性套件(函式庫)</td>
+</tr>
+</tbody></table>
+<h4 id="安裝步驟"><a href="#安裝步驟" class="headerlink" title="安裝步驟"></a>安裝步驟</h4><pre><code>解壓縮=&gt;./configure ...參數  =&gt;make=&gt; make install
+./configure --help 可查詢可設定的安裝參數(如安裝目錄及相依性套件位址)</code></pre><h4 id="安裝技巧"><a href="#安裝技巧" class="headerlink" title="安裝技巧"></a>安裝技巧</h4><p>下載Apache及相依性套件<br>Apache官網下載：<a href="http://httpd.apache.org/download.cgi" target="_blank" rel="noopener">http://httpd.apache.org/download.cgi</a><br>Apache的相依性套件如下:<br>APR + APR-Util：<a href="http://apr.apache.org/download.cgi" target="_blank" rel="noopener">http://apr.apache.org/download.cgi</a><br>PCRE：<a href="http://sourceforge.net/projects/pcre/files/pcre/" target="_blank" rel="noopener">http://sourceforge.net/projects/pcre/files/pcre/</a><br>安裝相依性套件<br>APR及APR-Util安裝<br>解壓縮APR及APR-Util</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo tar zxvf apr-1.4.6.tar.gz -C /opt/src</span><br><span class="line">sudo tar zxvf apr-util-1.4.1.tar.gz -C /opt/src</span><br></pre></td></tr></table></figure>
+<p>建立套件安裝目錄</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir -p /opt/lib/apr/apr-1.4.6</span><br><span class="line">sudo mkdir -p /opt/lib/apr-util/apr-util-1.4.1</span><br></pre></td></tr></table></figure>
+<p>建立軟鏈接(預設)至安裝目錄[未來更新新版本時，只要修改鏈接就可以減少相依性的修改問題]</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo ln -s /opt/lib/apr/apr-1.4.6 /opt/lib/apr/default</span><br><span class="line">sudo ln -s /opt/lib/apr-util/apr-util-1.4.1 /opt/lib/apr-util/default</span><br></pre></td></tr></table></figure>
+
+<p>安裝APR及APR-Util</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/src/apr-1.4.6</span><br><span class="line">sudo ./configure --prefix=/opt/lib/apr/default</span><br><span class="line">sudo make</span><br><span class="line">sudo make install</span><br><span class="line"></span><br><span class="line">cd /opt/sources/apr-util-1.4.1</span><br><span class="line">sudo ./configure --prefix=/opt/lib/apr-util/default --with-apr=/opt/lib/apr/default</span><br><span class="line">sudo make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+
+<p>安裝PCRE<br>首先請確定系统安裝了Perl，Perl在此不再赘述，如有需要請去官網查看安裝细則：<a href="http://www.cpan.org/src/README.html" target="_blank" rel="noopener">http://www.cpan.org/src/README.html</a><br>解壓縮PCRE</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo tar zxvf pcre-8.30.tar.gz -C /opt/src</span><br></pre></td></tr></table></figure>
+<p>建立PCRE安裝目錄及軟鏈接</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir -p /opt/lib/pcre/pcre-8.30</span><br><span class="line">sudo ln -s /opt/lib/pcre/pcre-8.30 /opt/lib/pcre/default</span><br></pre></td></tr></table></figure>
+<p>安裝PCRE</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/src/pcre-8.30</span><br><span class="line">sudo ./configure --prefix=/opt/lib/pcre/default</span><br><span class="line">sudo make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+<p>安裝Apache 2.4<br>解壓縮Apache 2.4</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo tar zxvf httpd-2.4.2.tar.gz -C /opt/src</span><br></pre></td></tr></table></figure>
+<p>建立Apache安裝目錄及軟鏈接</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir -p /opt/software/httpd/httpd-2.4.2</span><br><span class="line">sudo ln -s /opt/software/httpd/httpd-2.4.2 /opt/software/httpd/default</span><br></pre></td></tr></table></figure>
+<p>安裝Apache</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/src/httpd-2.4.2</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 此處請根據自己要搭建的環境進行配置</span></span><br><span class="line">sudo ./configure --prefix=/opt/software/httpd/default --enable-so --enable-rewrite=shared --with-mpm=prefork --with-apr=/opt/lib/apr/default --with-apr-util=/opt/lib/apr-util/default --with-pcre=/opt/lib/pcre/default</span><br><span class="line"></span><br><span class="line">sudo make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+<p>啟動Apache<br>通過apachectl啟動Apache</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo /opt/software/httpd/default/bin/apachectl start</span><br></pre></td></tr></table></figure>
+<p>檢查是否有Apache程序</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps aux | grep httpd</span><br></pre></td></tr></table></figure>
+<p>如果有Apache的程序，則證明啟動成功，瀏覽器位址欄输入 <a href="http://localhost" target="_blank" rel="noopener">http://localhost</a> 試試吧～<br>起動成功之後，可以將apachectl複製到/etc/init.d下，作为service啟動。<br>建立預設的httpd 軟鏈接</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ln -s /opt/software/httpd/default/bin/apachectl /etc/init.d/httpd</span><br></pre></td></tr></table></figure>
+<p>作為服務啟動</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service httpd start</span><br></pre></td></tr></table></figure>
+
+<p>開機時啟動Apache<br>編輯啟動程序</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/init.d/rc.local</span><br></pre></td></tr></table></figure>
+<p>在最後一行加上 service httpd start</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+              <a href="/tags/tarball/" rel="tag"># tarball</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/02/17/Java%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98-%E6%8E%A7%E5%88%B6/" rel="prev" title="Java學習筆記(控制)">
+      <i class="fa fa-chevron-left"></i> Java學習筆記(控制)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/02/21/%E8%BB%9F%E9%AB%94%E9%96%8B%E7%99%BC-%E5%8F%B0%E7%81%A3%E9%8A%80%E8%A1%8C%E7%BE%8E%E9%87%91%E5%8C%AF%E7%8E%87%E6%93%B7%E5%8F%96/" rel="next" title="軟體開發-台灣銀行美金匯率擷取">
+      軟體開發-台灣銀行美金匯率擷取 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#TarBall安裝步驟"><span class="nav-number">1.</span> <span class="nav-text">TarBall安裝步驟</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#至於為什麼要使用TarBall來安裝軟體呢"><span class="nav-number">2.</span> <span class="nav-text">至於為什麼要使用TarBall來安裝軟體呢?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#軟體安裝目錄及規劃"><span class="nav-number">3.</span> <span class="nav-text">軟體安裝目錄及規劃</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安裝步驟"><span class="nav-number">4.</span> <span class="nav-text">安裝步驟</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安裝技巧"><span class="nav-number">5.</span> <span class="nav-text">安裝技巧</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Kaponcer</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Kaponcer</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

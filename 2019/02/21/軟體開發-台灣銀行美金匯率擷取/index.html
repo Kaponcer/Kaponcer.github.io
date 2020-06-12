@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"kaponcer.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前言、目的　#此專案是為了複習java 程式設計.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="軟體開發-台灣銀行美金匯率擷取">
+<meta property="og:url" content="https://kaponcer.github.io/index.html/2019/02/21/%E8%BB%9F%E9%AB%94%E9%96%8B%E7%99%BC-%E5%8F%B0%E7%81%A3%E9%8A%80%E8%A1%8C%E7%BE%8E%E9%87%91%E5%8C%AF%E7%8E%87%E6%93%B7%E5%8F%96/index.html">
+<meta property="og:site_name" content="精 簡">
+<meta property="og:description" content="前言、目的　#此專案是為了複習java 程式設計.">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://yuml.me/diagram/scruffy/usecase/[Client]-(%E5%84%B2%E5%AD%98%E6%93%B7%E5%8F%96%E5%8C%AF%E7%8E%87),[Client]-(%E9%A1%AF%E7%A4%BA%E5%B7%B2%E6%93%B7%E5%8F%96%E5%8C%AF%E7%8E%87)">
+<meta property="og:image" content="http://yuml.me/diagram/scruffy/usecase/[Client]-(%E9%A1%AF%E7%A4%BA%E5%B7%B2%E6%93%B7%E5%8F%96%E5%8C%AF%E7%8E%87),(%E9%A1%AF%E7%A4%BA%E5%B7%B2%E6%93%B7%E5%8F%96%E5%8C%AF%E7%8E%87)%3E(%E8%A8%88%E7%AE%97%E5%B9%B3%E5%9D%87),(%E9%A1%AF%E7%A4%BA%E5%B7%B2%E6%93%B7%E5%8F%96%E5%8C%AF%E7%8E%87)%3E(%E9%A1%AF%E7%A4%BA%E4%B8%8A%E4%B8%80%E6%AC%A1%E5%87%BA%E7%8F%BE%E5%83%B9%E6%A0%BC%E7%9A%84%E6%97%A5%E6%9C%9F)">
+<meta property="article:published_time" content="2019-02-21T05:35:00.000Z">
+<meta property="article:modified_time" content="2020-06-12T03:22:04.076Z">
+<meta property="article:author" content="Kaponcer">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="H2">
+<meta property="article:tag" content="jetty">
+<meta property="article:tag" content="美金">
+<meta property="article:tag" content="jsoup">
+<meta property="article:tag" content="進行中的專案">
+<meta property="article:tag" content="台灣銀行">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yuml.me/diagram/scruffy/usecase/[Client]-(%E5%84%B2%E5%AD%98%E6%93%B7%E5%8F%96%E5%8C%AF%E7%8E%87),[Client]-(%E9%A1%AF%E7%A4%BA%E5%B7%B2%E6%93%B7%E5%8F%96%E5%8C%AF%E7%8E%87)">
+
+<link rel="canonical" href="https://kaponcer.github.io/index.html/2019/02/21/%E8%BB%9F%E9%AB%94%E9%96%8B%E7%99%BC-%E5%8F%B0%E7%81%A3%E9%8A%80%E8%A1%8C%E7%BE%8E%E9%87%91%E5%8C%AF%E7%8E%87%E6%93%B7%E5%8F%96/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>軟體開發-台灣銀行美金匯率擷取 | 精 簡</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">精 簡</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">個人筆記部落格</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>歸檔</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://kaponcer.github.io/index.html/2019/02/21/%E8%BB%9F%E9%AB%94%E9%96%8B%E7%99%BC-%E5%8F%B0%E7%81%A3%E9%8A%80%E8%A1%8C%E7%BE%8E%E9%87%91%E5%8C%AF%E7%8E%87%E6%93%B7%E5%8F%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Kaponcer">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="精 簡">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          軟體開發-台灣銀行美金匯率擷取
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2019-02-21 13:35:00" itemprop="dateCreated datePublished" datetime="2019-02-21T13:35:00+08:00">2019-02-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2020-06-12 11:22:04" itemprop="dateModified" datetime="2020-06-12T11:22:04+08:00">2020-06-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%BB%9F%E9%AB%94%E9%96%8B%E7%99%BC/" itemprop="url" rel="index"><span itemprop="name">軟體開發</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="前言、目的"><a href="#前言、目的" class="headerlink" title="前言、目的　#"></a>前言、目的　#</h1><p>此專案是為了複習java 程式設計.</p>
+<a id="more"></a>
+
+
+<h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><p>需求分析</p>
+<ol>
+<li>擷取指定日期美金匯率(R/E)(包含營業時間及非營業時間)</li>
+<li>查詢以擷取的美金匯率<img src="http://yuml.me/diagram/scruffy/usecase/[Client]-(儲存擷取匯率),[Client]-(顯示已擷取匯率)" ></li>
+</ol>
+<p>—————-以上基本—————–<br>3. 計算出指定日期的平均匯率<br>4. 已指定價格查詢上一次（買入或賣出）此價格出現的日期<br><img src="http://yuml.me/diagram/scruffy/usecase/[Client]-(顯示已擷取匯率),(顯示已擷取匯率)>(計算平均),(顯示已擷取匯率)>(顯示上一次出現價格的日期)" ></p>
+<h1 id="專案管理"><a href="#專案管理" class="headerlink" title="專案管理"></a>專案管理</h1><ol>
+<li>建立github專案儲藏庫<br><a href="https://github.com/Kaponcer/RoEAnalyze" target="_blank" rel="noopener">https://github.com/Kaponcer/RoEAnalyze</a><br>git : <a href="https://github.com/Kaponcer/RoEAnalyze.git" target="_blank" rel="noopener">https://github.com/Kaponcer/RoEAnalyze.git</a></li>
+</ol>
+<ol start="2">
+<li>eclipse=&gt;建立maven Project =&gt; maven-archetype-quickstart </li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span> <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>idv.kaponcer<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>RoEAnalyze<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">packaging</span>&gt;</span>jar<span class="tag">&lt;/<span class="name">packaging</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>RoEAnalyze<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://maven.apache.org<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">project.build.sourceEncoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">project.build.sourceEncoding</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">build</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">plugins</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-jar-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;<span class="name">configuration</span>&gt;</span>  </span><br><span class="line">                    <span class="tag">&lt;<span class="name">archive</span>&gt;</span>  </span><br><span class="line">                        <span class="tag">&lt;<span class="name">manifest</span>&gt;</span>  </span><br><span class="line">                            <span class="tag">&lt;<span class="name">mainClass</span>&gt;</span>idv.kaponcer.RoEAnalyze.App<span class="tag">&lt;/<span class="name">mainClass</span>&gt;</span>  </span><br><span class="line">                        <span class="tag">&lt;/<span class="name">manifest</span>&gt;</span>  </span><br><span class="line">                    <span class="tag">&lt;/<span class="name">archive</span>&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">build</span>&gt;</span>  </span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.12<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>.gitignore</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#maven build 相關檔案及日誌檔</span><br><span class="line">&#x2F;target&#x2F;</span><br><span class="line">log&#x2F;</span><br><span class="line"></span><br><span class="line">#eclipse 專案及設定檔</span><br><span class="line">.classpath</span><br><span class="line">.project</span><br><span class="line">.settings</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>將github專案儲藏庫複製到工作目錄下<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/Kaponcer/RoEAnalyze.git</span><br></pre></td></tr></table></figure>
+第一次commit+push使用eclipse套件</li>
+</ol>
+<h1 id="資料分析"><a href="#資料分析" class="headerlink" title="資料分析"></a>資料分析</h1><a href="https://rate.bot.com.tw/xrt/history" title="" target="">台灣銀行歷史匯率查詢</a>
+
+<table>
+<thead>
+<tr>
+<th align="center">名詞</th>
+<th align="left">解釋</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">現金匯率</td>
+<td align="left">以現金交易的匯率</td>
+</tr>
+<tr>
+<td align="center">即期匯率</td>
+<td align="left">使用存摺扣款交易的匯率</td>
+</tr>
+</tbody></table>
+<ol>
+<li>每日營業時間匯率(HTTPS://GET)<br><a href="https://rate.bot.com.tw/xrt/quote/yyyy-MM-dd/USD" target="_blank" rel="noopener">https://rate.bot.com.tw/xrt/quote/yyyy-MM-dd/USD</a><br>Example: <a href="https://rate.bot.com.tw/xrt/quote/2018-12-12/USD" target="_blank" rel="noopener">https://rate.bot.com.tw/xrt/quote/2018-12-12/USD</a></li>
+</ol>
+<ol start="2">
+<li>每日非營業時間匯率(HTTPS://GET)<br><a href="https://rate.bot.com.tw/xrt/quote/yyyy-MM-dd/USD/spot/1" target="_blank" rel="noopener">https://rate.bot.com.tw/xrt/quote/yyyy-MM-dd/USD/spot/1</a><br>Example: <a href="https://rate.bot.com.tw/xrt/quote/2018-12-12/USD/spot/1" target="_blank" rel="noopener">https://rate.bot.com.tw/xrt/quote/2018-12-12/USD/spot/1</a></li>
+</ol>
+<table>
+<thead>
+<tr>
+<th align="center">日期</th>
+<th align="center">時間</th>
+<th align="center">幣別</th>
+<th align="center">現金買入價</th>
+<th align="center">現金賣出價</th>
+<th align="center">即期買入價</th>
+<th align="center">即期賣出價</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">2019/02/21</td>
+<td align="center">09:00:33</td>
+<td align="center">USD</td>
+<td align="center">30.42</td>
+<td align="center">31.11</td>
+<td align="center">30.79</td>
+<td align="center">30.89</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th align="center">交易序號</th>
+<th align="center">日期</th>
+<th align="center">時間</th>
+<th align="center">現金買入價</th>
+<th align="center">現金賣出價</th>
+<th align="center">即期買入價</th>
+<th align="center">即期賣出價</th>
+<th align="center">營業或非營業時間</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">autoInteger</td>
+<td align="center">2019/02/21</td>
+<td align="center">09:00:33</td>
+<td align="center">30.42</td>
+<td align="center">31.11</td>
+<td align="center">30.79</td>
+<td align="center">30.89</td>
+<td align="center">營業時間</td>
+</tr>
+<tr>
+<td align="center">primary key</td>
+<td align="center">—super—</td>
+<td align="center">—key—</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">INTEGER</td>
+<td align="center">DATE</td>
+<td align="center">TIME</td>
+<td align="center">SMALLINT</td>
+<td align="center">SMALLINT</td>
+<td align="center">SMALLINT</td>
+<td align="center">SMALLINT</td>
+<td align="center">BOOLEAN</td>
+</tr>
+<tr>
+<td align="center">TID</td>
+<td align="center">T_DATE</td>
+<td align="center">T_TIME</td>
+<td align="center">C_BUY</td>
+<td align="center">C_SELL</td>
+<td align="center">R_BUY</td>
+<td align="center">R_SELL</td>
+<td align="center">WORKED</td>
+</tr>
+</tbody></table>
+<p>資料庫使用嵌入式H2，jdbc:h2:~/RoEAnalyze<br>RoEAnalyze=&gt;資料庫名稱</p>
+<p>建立資料庫</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">Transaction</span></span><br><span class="line">(TID <span class="built_in">INTEGER</span> PRIMARY <span class="keyword">KEY</span> AUTO_INCREMENT,</span><br><span class="line">T_DATE <span class="built_in">DATE</span>,</span><br><span class="line">T_TIME <span class="built_in">TIME</span>,</span><br><span class="line">C_BUY <span class="built_in">SMALLINT</span>,</span><br><span class="line">C_SELL <span class="built_in">SMALLINT</span>,</span><br><span class="line">R_BUY <span class="built_in">SMALLINT</span>,</span><br><span class="line">R_SELL <span class="built_in">SMALLINT</span>,</span><br><span class="line">WORKED <span class="built_in">BOOLEAN</span>)</span><br></pre></td></tr></table></figure>
+<p>查詢資料</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> *</span><br><span class="line"><span class="keyword">from</span> <span class="keyword">Transaction</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> *</span><br><span class="line"><span class="keyword">from</span> <span class="keyword">Transaction</span></span><br><span class="line"><span class="keyword">where</span> T_ID = ?</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> *</span><br><span class="line"><span class="keyword">from</span> <span class="keyword">Transaction</span></span><br><span class="line"><span class="keyword">where</span> T_DATE = ? <span class="keyword">AND</span> T_TIME = ?</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> *</span><br><span class="line"><span class="keyword">from</span> <span class="keyword">Transaction</span></span><br><span class="line"><span class="keyword">where</span> T_DATE = ? <span class="keyword">AND</span> T_TIME = ? <span class="keyword">AND</span> WORKED = ?</span><br></pre></td></tr></table></figure>
+
+<p>插入資料</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> Tranaction</span><br><span class="line">( T_DATE,T_TIME, C_BUY, C_SELL, R_BUY, R_SELL, WORKED)</span><br><span class="line"><span class="keyword">values</span> (?,?,?,?,?,?,?,?)</span><br></pre></td></tr></table></figure>
+
+<p>更新資料</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span> <span class="keyword">Transaction</span></span><br><span class="line"><span class="keyword">SET</span> T_DATE = ? , T_TIME = ? , C_BUY = ? , C_SELL = ? , R_BUY = ? , R_SELL = ?,WORKED = ?</span><br><span class="line"><span class="keyword">where</span> TID = ?</span><br></pre></td></tr></table></figure>
+
+
+<p>刪除資料</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span> <span class="keyword">from</span> <span class="keyword">Transaction</span></span><br><span class="line"><span class="keyword">where</span> TID = ?</span><br></pre></td></tr></table></figure>
+
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/java/" rel="tag"># java</a>
+              <a href="/tags/H2/" rel="tag"># H2</a>
+              <a href="/tags/jetty/" rel="tag"># jetty</a>
+              <a href="/tags/%E7%BE%8E%E9%87%91/" rel="tag"># 美金</a>
+              <a href="/tags/jsoup/" rel="tag"># jsoup</a>
+              <a href="/tags/%E9%80%B2%E8%A1%8C%E4%B8%AD%E7%9A%84%E5%B0%88%E6%A1%88/" rel="tag"># 進行中的專案</a>
+              <a href="/tags/%E5%8F%B0%E7%81%A3%E9%8A%80%E8%A1%8C/" rel="tag"># 台灣銀行</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/02/17/linux-tarball%E5%AE%89%E8%A3%9D/" rel="prev" title="linux tarball安裝">
+      <i class="fa fa-chevron-left"></i> linux tarball安裝
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/02/22/%E4%BD%BF%E7%94%A8git-maven-eclipse%E5%BB%BA%E7%AB%8B%E7%B0%A1%E5%96%AEJava%E5%B0%88%E6%A1%88/" rel="next" title="使用git+maven+eclipse建立簡單Java專案">
+      使用git+maven+eclipse建立簡單Java專案 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言、目的"><span class="nav-number">1.</span> <span class="nav-text">前言、目的　#</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#需求"><span class="nav-number">2.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#專案管理"><span class="nav-number">3.</span> <span class="nav-text">專案管理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#資料分析"><span class="nav-number">4.</span> <span class="nav-text">資料分析</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Kaponcer</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Kaponcer</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
