@@ -18,7 +18,7 @@ tags:
     
 + # 第一個程式Hello World #
     
-    {% codeblock lang:java %}
+    ```java
     //Hello World =>Java的單行註解方式
     public class HelloWorld{
         /** 
@@ -31,8 +31,8 @@ tags:
             System.out.println("Hello World");
         }//main-end
      }//HelloWorld class-end
-     {% endcodeblock %}
-    
+     
+    ```
 + # 基本型別與變數宣告 #
     
 
@@ -49,19 +49,19 @@ tags:
 | 布林 | boolean | 1 | true or false | false |
 
 
-{% codeblock lang:java %}
-        // 數值資料範圍
-        public class DataRange{
-            public static void main(String[]args){
-                System.out.println("byte range: " + Byte.MIN_VALUE + " ~ " + Byte.MAX_VALUE);
-                System.out.println("short range: " + Short.MIN_VALUE + " ~ " + Short.MAX_VALUE);
-                System.out.println("int range: " + Integer.MIN_VALUE + " ~ " + Integer.MAX_VALUE); 
-                System.out.println("long range: " + Long.MIN_VALUE + " ~ " + Long.MAX_VALUE);  
-                System.out.println("float range: " + Float.MIN_VALUE + " ~ " + Float.MAX_VALUE); 
-                System.out.println("double range: " + Double.MIN_VALUE + " ~ " + Double.MAX_VALUE);
-            }//main-end
-        }//class-end
-{% endcodeblock %}
+```java
+// 數值資料範圍
+public class DataRange{
+    public static void main(String[]args){
+        System.out.println("byte range: " + Byte.MIN_VALUE + " ~ " + Byte.MAX_VALUE);
+        System.out.println("short range: " + Short.MIN_VALUE + " ~ " + Short.MAX_VALUE);
+        System.out.println("int range: " + Integer.MIN_VALUE + " ~ " + Integer.MAX_VALUE); 
+        System.out.println("long range: " + Long.MIN_VALUE + " ~ " + Long.MAX_VALUE);  
+        System.out.println("float range: " + Float.MIN_VALUE + " ~ " + Float.MAX_VALUE); 
+        System.out.println("double range: " + Double.MIN_VALUE + " ~ " + Double.MAX_VALUE);
+    }//main-end
+}//class-end
+```
 
 <!--- more --->
 
