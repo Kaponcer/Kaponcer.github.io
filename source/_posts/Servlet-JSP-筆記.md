@@ -1,12 +1,13 @@
 ---
 title: Servlet&JSP 筆記
-date: 2020-06-17 05:13:47
 categories: 
- - Java
- - Web
+    - Java
+    - Web
+comments: true
+date: 2020-06-17 05:13:47
 tags:
-　- java
-　- web
+    - java
+    - web
 ---
 
 1. 部屬描述黨
@@ -54,4 +55,4 @@ tags:
         other
             otherFileOrDir                 
     ```
-3. 
+
