@@ -10,7 +10,18 @@ tags:
  - github
  - markdown
 ---
-# 備份 #
+<div style=" border: 1px solid;">
+
+ # <p id="catlog" style=" text-align: center;"> 目錄 </a> #
+- <a href="#backup">備份</a>
+- <a href="#recover">還原</a>
+</div>
+
+
+<!-- more -->
+
+
+# <a id="backup" href="#catlog">備份</a> #
 1. 確認.gitignore 內如是否包含如下
 ```.gitignore
 .DS_Store
@@ -37,7 +48,7 @@ git push --setupstream=origin/hexo
 #推送本次commit到遠端資儲存庫
 ```
 
-# 還原 #
+# <a id="recover" href="#catlog">還原</a> #
 
 ```bash
   hexo init

@@ -17,7 +17,13 @@ tags:
 - <a href="#descriptive">語意化</a>
 </div>
 
-# 1.  <a id="margin"> margin、padding、border </a> #
+
+
+<!-- more -->
+
+
+
+#  1.  <a id="margin" href="#catlog"> margin、padding、border </a> #
 
     ```html
         <style>
@@ -56,7 +62,7 @@ tags:
         ducimus ratione eligendi. Totam at omnis nobis dicta nemo neque eaque esse illum laborum possimus.
     </div>
 
-#  2. <a id="text">文字</a> #
+#  2. <a id="text" href="#catlog">文字</a> #
 
     ```css
         <style>

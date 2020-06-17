@@ -5,7 +5,20 @@ categories: editor
 tags:
     - VSCode
 ---
-# 常用快捷鍵 #
+<div style=" border: 1px solid;">
+
+ # <p id="catlog" style=" text-align: center;"> 目錄 </a> #
+- <a href="#hotkey">常用快捷鍵</a>
+- <a href="#extension">擴充元件</a>
+</div>
+
+
+
+<!-- more -->
+
+
+
+# <a id="hotkey" href="#catlog"> 常用快捷鍵 </a> #
 | 快捷鍵          | 用途           |                                                 example |
 | :-------------- | -------------- | ------------------------------------------------------: |
 | tab             | 自動補全程式碼 | html  這裡直接按tab鍵就可以補全為 ``` <html> </html>``` |
@@ -13,7 +26,7 @@ tags:
 | shift + alt + F | 快速排版       |                                                         |
 |                 |                |                                                         |
 
-# Extension(擴充元件) #
+# <a id="extension" href="#catlog"> Extension(擴充元件) </a> #
 - Live Server
 可以快速啟動一個本地的伺服器進行˙程式碼部屬測試
 -  Markdown All in One  

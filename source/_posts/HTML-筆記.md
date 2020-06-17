@@ -21,7 +21,13 @@ tags:
 
 </div>
 
-# <a id="goal"> HTML 的目標 </a> #
+
+
+<!-- more -->
+
+
+
+# <a id="goal" href="#catlog"> HTML 的目標 </a> #
 
  HTML 為定義網頁的結構的標記語言。
 
@@ -35,19 +41,19 @@ tags:
 </html>
 ```
 
-# <a id="area">  區塊 </a>
+# <a id="area" href="#catlog">  區塊 </a>
 
 ```html
 <div>這是一個區塊</div>
 ```
 
-# <a id="p"> 段落 </a>
+# <a id="p" href="#catlog"> 段落 </a>
 
 ```html
 <p> 這是一個段落</p>
 ```
 
-# <a id="pic"> 圖片 </a>
+# <a id="pic" href="#catlog"> 圖片 </a>
 
 ```html
 <img src="pic/123.jpg" alt="替代文字">
@@ -58,13 +64,13 @@ tags:
 </figure>
 ```
 
-# <a id="href"> 超連結（錨點） </a> #
+# <a id="href" href="#catlog"> 超連結（錨點） </a> #
 
 ```html
 <a href="www.google.com">Google</a>
 ```
 
-# <a id="list"> 清單 </a>
+# <a id="list" href="#catlog"> 清單 </a>
 
 ```html
 <ul><!--- 無序清單 --->
@@ -81,7 +87,7 @@ tags:
 </ol>
 ```
 
-# <a id="table"> 表格 </a>
+# <a id="table" href="#catlog"> 表格 </a>
 
 ```html
 <table><!--- 表格 --->
@@ -106,7 +112,7 @@ tags:
 </table>
 ```
 
-# <a id="descriptive">語意化</a>
+# <a id="descriptive" href="#catlog">語意化</a>
 
     ```html
     ```
