@@ -9,11 +9,15 @@ tags:
  - css
  - 前端
 ---
+<div style=" border: 1px solid;">
+
+ # <p id="catlog" style=" text-align: center;"> 目錄 </a> #
 - <a href="#margin">margin、padding、border</a>
 - <a href="#text">文字</a>
 - <a href="#descriptive">語意化</a>
+</div>
 
-1. <a id="margin"> margin、padding、border </a>
+# 1.  <a id="margin"> margin、padding、border </a> #
 
     ```html
         <style>
@@ -52,9 +56,9 @@ tags:
         ducimus ratione eligendi. Totam at omnis nobis dicta nemo neque eaque esse illum laborum possimus.
     </div>
 
-2. <a id="text">文字</a>
+#  2. <a id="text">文字</a> #
 
-    ```html
+    ```css
         <style>
             .test {
                 font-size: 20px;
@@ -132,4 +136,4 @@ tags:
         <p style="text-transform: capitalize;">This is some text.</p>
     </div>
 
-3. <a id="descriptive">語意化</a>
+3. 

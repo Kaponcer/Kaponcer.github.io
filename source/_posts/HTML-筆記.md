@@ -7,8 +7,23 @@ tags:
  - html
  - 前端
 ---
+<div style=" border: 1px solid;">
 
-# HTML為定義網頁的結構的標記語言. #
+ # <p id="catlog" style=" text-align: center;"> 目錄 </a> #
+- <a href="#goal"> HTML 的目標 </a>
+- <a href="#area">  區塊 </a>
+- <a href="#p"> 段落 </a>
+- <a href="#pic"> 圖片 </a>
+- <a href="#href"> 超連結（錨點） </a>
+- <a href="#list"> 清單 </a>
+- <a href="#table"> 表格 </a>
+- <a href="#descriptive">語意化</a>
+
+</div>
+
+# <a id="goal"> HTML 的目標 </a> #
+
+ HTML 為定義網頁的結構的標記語言。
 
 ```html
 <html> <!--- 表示網頁內容 --->
@@ -19,16 +34,21 @@ tags:
     </body>
 </html>
 ```
-# 區塊
+
+# <a id="area">  區塊 </a>
+
 ```html
 <div>這是一個區塊</div>
 ```
 
-# 段落
+# <a id="p"> 段落 </a>
+
 ```html
 <p> 這是一個段落</p>
 ```
-# 圖片
+
+# <a id="pic"> 圖片 </a>
+
 ```html
 <img src="pic/123.jpg" alt="替代文字">
 <!--- 或是 --->
@@ -38,12 +58,14 @@ tags:
 </figure>
 ```
 
-# 超連結(錨點) #
+# <a id="href"> 超連結（錨點） </a> #
+
 ```html
 <a href="www.google.com">Google</a>
 ```
 
-# 清單
+# <a id="list"> 清單 </a>
+
 ```html
 <ul><!--- 無序清單 --->
     <li></li> <!--- list item --->
@@ -58,7 +80,9 @@ tags:
     <li></li>
 </ol>
 ```
-# 表格
+
+# <a id="table"> 表格 </a>
+
 ```html
 <table><!--- 表格 --->
     <tr><!--- 標題列 ---->
@@ -66,7 +90,7 @@ tags:
         <th></th>
         <th></th>
     </tr>
-    
+
     <tr><!--- 列 --->
         <td></td>
         <td></td><!---欄 --->
@@ -81,3 +105,8 @@ tags:
     </tr>
 </table>
 ```
+
+# <a id="descriptive">語意化</a>
+
+    ```html
+    ```
