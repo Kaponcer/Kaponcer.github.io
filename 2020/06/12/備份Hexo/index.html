@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"kaponcer.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="備份 確認.gitignore 內如是否包含如下1234567.DS_StoreThumbs.dbdb.json*.lognode_modules&#x2F;public&#x2F;.deploy*&#x2F; Git指例123456789101112git init#建立git儲存庫(原本就存在gitignore是因為hexo本身就會產生)git checkout -b hexo#建立一個名為h">
+  <meta name="description" content="目錄  備份 還原">
 <meta property="og:type" content="article">
 <meta property="og:title" content="備份Hexo">
 <meta property="og:url" content="https://kaponcer.github.io/index.html/2020/06/12/%E5%82%99%E4%BB%BDHexo/index.html">
 <meta property="og:site_name" content="精 簡">
-<meta property="og:description" content="備份 確認.gitignore 內如是否包含如下1234567.DS_StoreThumbs.dbdb.json*.lognode_modules&#x2F;public&#x2F;.deploy*&#x2F; Git指例123456789101112git init#建立git儲存庫(原本就存在gitignore是因為hexo本身就會產生)git checkout -b hexo#建立一個名為h">
+<meta property="og:description" content="目錄  備份 還原">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2020-06-12T03:54:38.000Z">
-<meta property="article:modified_time" content="2020-06-12T03:31:36.634Z">
+<meta property="article:modified_time" content="2020-06-17T08:48:54.865Z">
 <meta property="article:author" content="Kaponcer">
 <meta property="article:tag" content="hexo">
 <meta property="article:tag" content="next theme">
@@ -187,10 +187,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">發表於</span>
-              
 
-              <time title="創建時間：2020-06-12 11:54:38 / 修改時間：11:31:36" itemprop="dateCreated datePublished" datetime="2020-06-12T11:54:38+08:00">2020-06-12</time>
+              <time title="創建時間：2020-06-12 11:54:38" itemprop="dateCreated datePublished" datetime="2020-06-12T11:54:38+08:00">2020-06-12</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2020-06-17 16:48:54" itemprop="dateModified" datetime="2020-06-17T16:48:54+08:00">2020-06-17</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -212,13 +218,25 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="備份"><a href="#備份" class="headerlink" title="備份"></a>備份</h1><ol>
+        <div style=" border: 1px solid;">
+
+<h1 id="目錄"><a href="#目錄" class="headerlink" title=" 目錄 "></a><p id="catlog" style=" text-align: center;"> 目錄 </a></h1><ul>
+<li><a href="#backup">備份</a></li>
+<li><a href="#recover">還原</a></div>
+
+
+</li>
+</ul>
+<a id="more"></a>
+
+
+<h1 id="備份"><a href="#備份" class="headerlink" title="備份"></a><a id="backup" href="#catlog">備份</a></h1><ol>
 <li>確認.gitignore 內如是否包含如下<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.DS_Store</span><br><span class="line">Thumbs.db</span><br><span class="line">db.json</span><br><span class="line">*.log</span><br><span class="line">node_modules&#x2F;</span><br><span class="line">public&#x2F;</span><br><span class="line">.deploy*&#x2F;</span><br></pre></td></tr></table></figure></li>
 <li>Git指例<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br><span class="line"><span class="comment">#建立git儲存庫(原本就存在gitignore是因為hexo本身就會產生)</span></span><br><span class="line">git checkout -b hexo</span><br><span class="line"><span class="comment">#建立一個名為hexo的分支，用來存放備份資料</span></span><br><span class="line">git add .</span><br><span class="line"><span class="comment">#將目前目錄下的內容加入git追蹤</span></span><br><span class="line">git commit -m <span class="string">"第一次備份"</span></span><br><span class="line"><span class="comment">#寫入儲存庫</span></span><br><span class="line">git remote add  origin https://github.com/username/username.github.io.git</span><br><span class="line"><span class="comment">#加入遠端儲存庫位址(基本上只要第一次)(註:不要跟著我打網址，要看您的遠端位址)</span></span><br><span class="line">git push --setupstream=origin/hexo</span><br><span class="line"><span class="comment">#推送本次commit到遠端資儲存庫</span></span><br></pre></td></tr></table></figure>
 
 </li>
 </ol>
-<h1 id="還原"><a href="#還原" class="headerlink" title="還原"></a>還原</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hexo init</span><br><span class="line">mkdir gitback</span><br><span class="line"><span class="built_in">cd</span> ../..</span><br><span class="line">git checkout hexo</span><br><span class="line"><span class="comment">#切換到hexo分支(之前備份到這裡的分支)</span></span><br><span class="line"><span class="comment">#根據不同的情況看下面的作法</span></span><br></pre></td></tr></table></figure>
+<h1 id="還原"><a href="#還原" class="headerlink" title="還原"></a><a id="recover" href="#catlog">還原</a></h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hexo init</span><br><span class="line">mkdir gitback</span><br><span class="line"><span class="built_in">cd</span> ../..</span><br><span class="line">git checkout hexo</span><br><span class="line"><span class="comment">#切換到hexo分支(之前備份到這裡的分支)</span></span><br><span class="line"><span class="comment">#根據不同的情況看下面的作法</span></span><br></pre></td></tr></table></figure>
 <ol>
 <li><p>備份的版本跟新地點一樣</p>
 <p>覆蓋就可以了</p>
@@ -313,7 +331,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#備份"><span class="nav-number">1.</span> <span class="nav-text">備份</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#還原"><span class="nav-number">2.</span> <span class="nav-text">還原</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#目錄"><span class="nav-number">1.</span> <span class="nav-text"> 目錄 </span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#備份"><span class="nav-number">2.</span> <span class="nav-text">備份</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#還原"><span class="nav-number">3.</span> <span class="nav-text">還原</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
