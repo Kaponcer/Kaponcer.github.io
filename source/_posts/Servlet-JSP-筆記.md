@@ -69,11 +69,37 @@ tags:
     ```
 
 
-- <a id="servlet" href="#catlog">    Servlet </a>
+- <a id="servlet" href="#catlog">Servlet</a>
   
     {% blockquote 圖1.1 Servlet類別關係圖 %}
         ![ServletClass](ServletClass.png)
     {% endblockquote %}
+
+    <!-- @startuml UML backup
+    Servlet <|-- GenericServlet
+    GenericServlet <|-- HttpServlet
+    interface Servlet{
+        + void init(ServletConfig config)
+        + ServletConfig getServletConfig()
+        + void service(ServletRequest req,ServletResponce res)
+        + String getServletInfo()
+        + void destroy()
+    }
+    class GenericServlet{}
+    class HttpServlet{
+        + HttpServlet()
+        # Long getLastModified(HttpServletResponce res)
+        # void doGet(HttpServletRequest req,HttpServletResponce res)
+        # void doHead(HttpServletRequest req,HttpServletResponce res)
+        # void doPost(HttpServletRequest req,HttpServletResponce res)
+        # void doput(HttpServletRequest req,HttpServletResponce res)
+        # void doDelete(HttpServletRequest req,HttpServletResponce res)
+        # void doOption(HttpServletRequest req,HttpServletResponce res)
+        # void doTrace(HttpServletRequest req,HttpServletResponce res)
+        # void service(HttpServletRequest req,HttpServletResponce res)
+        + void service(ServletRequest req,ServletResponce res)
+   }@enduml
+    -->
 
   
 - 
