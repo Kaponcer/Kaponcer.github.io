@@ -14,7 +14,7 @@ tags:
  # <p id="catlog" style=" text-align: center;"> 目錄 </a> #
 - <a href="#descript">部屬描述檔</a>
 - <a href="#structe">Web Project 結構</a>
-- 
+- <a href="#servlet">Servlet</a>
 </div>
 
 
@@ -68,3 +68,12 @@ tags:
             otherFileOrDir                 
     ```
 
+
+- <a id="servlet" href="#catlog">    Servlet </a>
+  
+    {% blockquote 圖1.1 Servlet類別關係圖 %}
+        ![ServletClass](ServletClass.png)
+    {% endblockquote %}
+
+  
+- 
