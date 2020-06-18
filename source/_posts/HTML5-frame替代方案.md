@@ -55,7 +55,7 @@ tags:
     </html>
     ```
 
-    <!-- more -->
+<!-- more -->
 
 # <a id="iframe" href="#catlog">  方案一 使用 iframe </a> #
 <p class="discription"> 基本上是可以使用的 , 不過據說對<strong> SEO </strong> 不太好，而且瀏覽器的相容性也不太好．大多都不會使用這個方法來組織自己的網站內容，不過如果是 <strong> 安插廣告 </strong>是不錯的選擇
@@ -110,7 +110,6 @@ tags:
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Document</title>
-
     </head>
 
     <body>
@@ -150,7 +149,6 @@ tags:
     </head>
 
     <body>
-        
         <div id="main" style="margin:10px; border: 2px solid;"></div>
         <div id="main2" style="margin:10px; border: 2px solid red;"></div>
     </body>
