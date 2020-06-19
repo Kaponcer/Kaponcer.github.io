@@ -17,7 +17,7 @@ tags:
     strong { 
         text-shadow: 0.5px 0.5px red;
     }
-    .discription {
+    .description {
         text-indent: 2em;  
     }
 </style>
@@ -35,7 +35,7 @@ tags:
 
 # <a id="subject" href="#catlog">  HTML5 frameset 廢棄問題 </a> #
 
-<p class="discription"> 在新版的 HTML5 中，已經不支援 frameset 以及 frame 這兩個標籤．目前 Chrome 執行下來，會只認第一個 frame 元素的內容，第二個是不會顯示出來的．
+<p class="description"> 在新版的 HTML5 中，已經不支援 frameset 以及 frame 這兩個標籤．目前 Chrome 執行下來，會只認第一個 frame 元素的內容，第二個是不會顯示出來的．
 </p>
 
     ```html
@@ -59,7 +59,7 @@ tags:
 <!-- more -->
 
 # <a id="iframe" href="#catlog">  方案一 使用 iframe </a> #
-<p class="discription"> 基本上是可以使用的 , 不過據說對<strong> SEO </strong> 不太好，而且瀏覽器的相容性也不太好．大多都不會使用這個方法來組織自己的網站內容，不過如果是 <strong> 安插廣告 </strong>是不錯的選擇
+<p class="description"> 基本上是可以使用的 , 不過據說對<strong> SEO </strong> 不太好，而且瀏覽器的相容性也不太好．大多都不會使用這個方法來組織自己的網站內容，不過如果是 <strong> 安插廣告 </strong>是不錯的選擇
     </p> 
 
     ```html
@@ -97,7 +97,7 @@ tags:
 
 # <a id="object" href="#catlog">  方案二 使用 Object 標籤</a> #
 
-<p class="discription">
+<p class="description">
     這個方法比較沒有什麼問題，但是在程式碼上面<strong>會出現一個以上的html、head、body標籤</strong>，因為它是將整個網頁放在一個object標籤之內．<strong>可能會造成SEO優化問題</strong>．
     </p>
 
@@ -127,7 +127,7 @@ tags:
 # <a id="javascript" href="#catlog">  方案三 使用 jQuery</a> #
 
 
-<p class="discription">
+<p class="description">
 有別於Object物件的壞處，內文基本上沒有多餘的標籤，不過對於網頁結構上不太好，因為一個網頁結構需要<strong>透過javascript來處理(渲染？)</strong>有點不太適合．
 </p>
 
