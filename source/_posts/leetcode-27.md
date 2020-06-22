@@ -3,7 +3,7 @@ title: leetcode#27
 date: 2020-06-22 20:30:16
 categories: 
  - leetcode
- - array
+ - 1.array
  - easy
 tags:
  - leetcode
