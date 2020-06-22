@@ -5,12 +5,11 @@ categories:
  - leetcode
  - array
  - easy
- - 461. Remove Element
 tags:
  - leetcode
  - array
  - easy
- - 461. Remove Element
+ - 27. Remove Element
 ---
 
 問題:
