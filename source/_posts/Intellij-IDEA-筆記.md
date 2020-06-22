@@ -86,9 +86,10 @@ tags:
         <br/>
         在這裡可能會出現一個問題，有些瀏覽器強制HTTPS連線，而現在的情況卻只能HTTP連線而已.
     - ## <a id="tomcatSSL"  href="#catlog"> HTTPS (SSL) </a> ##
+        <p class="description">這裡只演示最小限度的設定，詳情請仔細對照環境再修改．</p>
         1. 準備憑證，使用JDK內附的keytool 公用程式．
         ```bash
-        # keytool -genkey -alias 憑證的名稱 -keyalg RSA -storepass keystore的密碼 #
+        # keytool -genkey -alias 憑證的名稱 -keyalg RSA -storepass keystore的密碼 -keystore 憑證的路徑及名稱(沒有名稱就是在該資料夾下建立) #
         keytool -genkey -alias tomcat -keyalg RSA -storepass StorePassword -keystore localhost-rsa.jks
         ```
         {% blockquote 圖1.8 實際產生key畫面 %}

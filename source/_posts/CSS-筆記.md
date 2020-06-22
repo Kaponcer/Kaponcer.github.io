@@ -25,7 +25,7 @@ tags:
 - <a href="#margin">margin、padding、border</a>
 - <a href="#text">文字</a>
 - <a href="#floatdiv">float</a>
-<!-- - <a href="#descriptive">語意化</a> -->
+- <a href="#inline-block">inline block inline-block</a>
 </div>
 
 <!-- more -->
@@ -241,4 +241,22 @@ tags:
     <!-- 這是用來將上面的float樣式消除的方法，請參考上面的樣式表-->
     <div class="container-height-fix"></div>
 </div>
+```
+# 4. <a id="inline-block" href="#catlog">inline block inline-block</a> #
+
+## 案例樣式表 ##
+```css
+*{ /* 這是為了清空預設格式 */
+    margin: 0;
+    padding: 0;
+}
+.inline{
+
+}
+.block{
+
+}
+.inlineblock{
+    
+}
 ```
