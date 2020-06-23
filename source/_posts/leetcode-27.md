@@ -14,8 +14,13 @@ tags:
 
 問題:
 給一組陣列nums跟一個int val，將與val相同的都在最後面的位置，最後再傳送這個陣列有多少個值與val不同．
+
+<!-- more -->
+
+
 - 解1.
   每找到一個與val不同的值(nums[j])跟之前的第一個與val相同的值(nums[i])做交換
+  
 ```java
 class Solution {
     public int removeElement(int[] nums, int val) {

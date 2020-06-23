@@ -26,11 +26,14 @@ tags:
 - <a href="#text">文字</a>
 - <a href="#floatdiv">float</a>
 - <a href="#inline-block">inline block inline-block</a>
+- <a href="#boxsizing">box-sizing<</a>
+- <a href="#position">position</a>
+- <a href="#hover">:hover</a>
 </div>
 
 <!-- more -->
 
-# 1.  <a id="margin" href="#catlog"> margin、padding、border </a> #
+- # <a id="margin" href="#catlog"> margin、padding、border </a> #
 
     ```html
         <style>
@@ -69,7 +72,7 @@ tags:
     ducimus ratione eligendi. Totam at omnis nobis dicta nemo neque eaque esse illum laborum possimus.
 </div>
 
-# 2. <a id="text" href="#catlog">文字</a> #
+- # <a id="text" href="#catlog">文字</a> #
 
     ```css
         <style>
@@ -149,7 +152,7 @@ tags:
     <p style="text-transform: capitalize;">This is some text.</p>
 </div>
 
-# 3. <a id="floatdiv" href="#catlog">float</a> #
+- # <a id="floatdiv" href="#catlog">float</a> #
 
 ## 案例樣式表 ##
 
@@ -242,21 +245,170 @@ tags:
     <div class="container-height-fix"></div>
 </div>
 ```
-# 4. <a id="inline-block" href="#catlog">inline block inline-block</a> #
+- # <a id="inline-block" href="#catlog">inline block inline-block</a> #
 
 ## 案例樣式表 ##
+
 ```css
-*{ /* 這是為了清空預設格式 */
+* {
+    /* 這是為了清空預設格式 */
     margin: 0;
     padding: 0;
 }
-.inline{
 
+.div {
+    margin: 20px;
+    border: 1px solid ;
+    background-color: #515faf;
 }
-.block{
+ol{
+    margin: 5px;
+    border: 1px solid red;
+    text-align: center;
+}
+li{
+    border: 5px solid orange;
+    width: 100px;
+    margin: 10px ;
+    padding: 5px;
+    background-color: white;
+}
+.inline {
+    display: inline;
+}
 
+.block {
+    display: block;
 }
-.inlineblock{
-    
+
+.inlineblock {
+    display: inline-block;
 }
+```
+
+## 案例１ ##
+<p class="description">我們知道div、ol、li都是區塊元素，這時候我們將li標籤display樣式分別顯示inline、block、inline-block會有怎麼樣的情況，注意我們只有li的display標籤不同，其餘的都相同</p>
+
+```html
+<div>
+    <p>這是li標籤display樣式為inline</p>
+    <ol>
+        <li class="inline">item</li>
+        <li class="inline">item</li>
+        <li class="inline">item</li>
+        <li class="inline">item</li>
+    </ol>
+</div>
+<div>
+    <p>這是li標籤display樣式為block</p>
+    <ol>
+        <li class="block">item</li>
+        <li class="block">item</li>
+        <li class="block">item</li>
+        <li class="block">item</li>
+    </ol>
+</div>
+div>
+    <p>這是li標籤display樣式為inline-block</p>
+    <ol>
+        <li class="inlineblock">item</li>
+        <li class="inlineblock">item</li>
+        <li class="inlineblock">item</li>
+        <li class="inlineblock">item</li>
+    </ol>
+</div>
+<div>
+    <p>這是li標籤display樣式為none，簡單講就是不給看也不會分配空間．</p>
+    <ol>
+        <li class="none">item</li>
+        <li class="none">item</li>
+        <li class="none">item</li>
+        <li class="none">item</li>
+    </ol>
+</div>
+```
+
+- # <a id="boxsizing" href="#catlog">box-sizing</a> #
+
+## 案例樣式表 ##
+```css
+.origin,.boxsizing{
+    float: right;
+    margin: 2px ;
+}
+div div {
+    margin: 5px auto;
+    border:5px solid red;
+    width: 200px;
+    height: 100px;
+}
+.origin {
+    background-color: #351;
+}
+
+.boxsizing {
+    background-color: #555555;
+    /* width為border以內(border也包含)來做計算 */
+}
+.origin div {
+    /* box-sizing: content-box; 預設選項，如果沒有特別設定 */
+}
+
+.boxsizing div{
+    box-sizing: border-box;
+}
+.clearfix{
+    clear: both;
+}
+.width200{
+    width: 200px;
+}
+.border20{
+    border:20px solid red;
+}
+p{
+    font-size: 20px;
+    text-align: center;
+    color: silver;
+}
+```
+## 案例１ ##
+<p class="description">在之前我們了解了margin、border、padding、content這之間的關係，用來計算合適的width．這裡透過一個box-sizing的樣式來讓我們，更方便去計算每個html元素的width．</p>
+
+
+```html
+<div class="origin">
+    <p>Origin</p>
+    <div class="width200">Width=200px border=5px</div>
+    <div class="width200 border20">Width=200px border=20px</div>
+</div>
+
+<div class="boxsizing">
+    <p>boxsizing</p>
+    <div class="width200">Width=200px border=5px</div>
+    <div class="width200 border20">Width=200px border=20px</div>
+</div>
+<div class="clearfix"></div>
+```
+
+- # <a id="position" href="#catlog">position</a> #
+
+## 案例樣式表 ##
+```css
+
+```
+## 案例１ ##
+```html
+
+
+```
+- # <a id="hover" href="#catlog">:hover</a> #
+
+## 案例樣式表 ##
+```css
+
+```
+## 案例１ ##
+```html
+
 ```

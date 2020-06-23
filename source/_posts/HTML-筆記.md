@@ -58,6 +58,8 @@ tags:
     ```
     {% blockquote  CSS案例 <a href="/2020/06/17/CSS-筆記/#floatdiv">div tag CSS float</a> %}
     {% endblockquote %}
+    {% blockquote  CSS案例 <a href="/2020/06/17/CSS-筆記/#boxsizing">box-sizing</a> %}
+    {% endblockquote %}
     - ## <a id="p" href="#catlog"> 段落 </a>
 
     ```html
