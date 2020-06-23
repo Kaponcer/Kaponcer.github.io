@@ -11,11 +11,16 @@ tags:
  - easy
  - 27. Remove Element
 ---
+{% blockquote 題目: https://leetcode.com/problems/remove-element/ remove-element %}
+{% endblockquote %}
 
 問題:
 給一組陣列nums跟一個int val，將與val相同的都在最後面的位置，最後再傳送這個陣列有多少個值與val不同．
 
 <!-- more -->
+1. 必須在同一個陣列下操作(<a href="https://en.wikipedia.org/wiki/In-place_algorithm">In-place algorithm</a>)
+2. 題目沒說，升冪 降冪都可用
+3. 
 
 
 - 解1.
