@@ -26,7 +26,9 @@ tags:
 - <a href="#text">文字</a>
 - <a href="#floatdiv">float</a>
 - <a href="#inline-block">inline block inline-block</a>
-- <a href="#boxsizing">box-sizing<</a>
+- <a href="#boxsizing">box-sizing</a>
+- <a href="#CSSReset">CSS Reset & CSS Normalize</a>
+- <a href="#flex">flex</a>
 - <a href="#position">position</a>
 - <a href="#hover">:hover</a>
 </div>
@@ -390,6 +392,80 @@ p{
 </div>
 <div class="clearfix"></div>
 ```
+
+- # <a id="CSSReset" href="#catlog">CSS Reset & CSS Normalize</a> #
+    <p class="description">
+    <strong>CSS Reset</strong>：CSS樣式重置，因為各個瀏覽器會原本的預設樣式會有不同的CSS樣式，<strong>開發者為了完全的控制樣式</strong>，所以會一開始重置CSS樣式．</p>
+
+    {% blockquote CSS Reset https://meyerweb.com/eric/tools/css/reset/  Eric Meyer %}
+
+    ```css
+    /* http://meyerweb.com/eric/tools/css/reset/ 
+    v2.0 | 20110126
+    License: none (public domain)
+    */
+
+    html, body, div, span, applet, object, iframe,
+    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+    a, abbr, acronym, address, big, cite, code,
+    del, dfn, em, img, ins, kbd, q, s, samp,
+    small, strike, strong, sub, sup, tt, var,
+    b, u, i, center,
+    dl, dt, dd, ol, ul, li,
+    fieldset, form, label, legend,
+    table, caption, tbody, tfoot, thead, tr, th, td,
+    article, aside, canvas, details, embed, 
+    figure, figcaption, footer, header, hgroup, 
+    menu, nav, output, ruby, section, summary,
+    time, mark, audio, video {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 100%;
+        font: inherit;
+        vertical-align: baseline;
+    }
+    /* HTML5 display-role reset for older browsers */
+    article, aside, details, figcaption, figure, 
+    footer, header, hgroup, menu, nav, section {
+        display: block;
+    }
+    body {
+        line-height: 1;
+    }
+    ol, ul {
+        list-style: none;
+    }
+    blockquote, q {
+        quotes: none;
+    }
+    blockquote:before, blockquote:after,
+    q:before, q:after {
+        content: '';
+        content: none;
+    }
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+    ```
+    {% endblockquote %}
+    <p class="description">
+    <strong>CSS Normalize</strong>：CSS正規化，當CSS重置時，樣式都歸０，使得有些有用的css樣式，也必須重新設定，CSS Normalize 就跟著孕育而生．</p>
+    {% blockquote  CSS Normalize.css的目標 http://nicolasgallagher.com/about-normalize-css/  normalize.css %}
+    - <strong>保留有用的瀏覽器預設值</strong>，而非消除它．
+    - 替廣泛的HTML元素提供<strong>正規化樣式</strong>．
+    - <strong>修正問題(bugs)</strong>及瀏覽器間的不一致．
+    - 透過部分的修改來<strong>改善可用性</strong>．
+    - 使用註解以及提供細部文件來<strong>說明程式碼</strong>．
+    {% endblockquote %}
+
+
+
+
+
+
+- # <a id="flex" href="#catlog">flex</a> #
 
 - # <a id="position" href="#catlog">position</a> #
 
