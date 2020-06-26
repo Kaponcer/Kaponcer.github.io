@@ -187,8 +187,8 @@ tags:
 }
 ```
 
-## 案例１ ##
-<p class="description"> 在這裡會發現，container的背景顏色會消失，是因為他的子元素的CSS樣式有float樣式，擁有float樣式的元素會跳脫原本的父元素，而這裡的.container會因為沒有子元素，且沒有設定height樣式，導致它不會出現在上面． </p>
+## 案例１ ## 
+<p id="floatCase1" class="description"> 在這裡會發現，container的背景顏色會消失，是因為他的子元素的CSS樣式有float樣式，擁有float樣式的元素會跳脫原本的父元素，而這裡的.container會因為沒有子元素，且沒有設定height樣式，導致它不會出現在上面． </p>
 
 ```html
 <div class="container">
@@ -466,6 +466,89 @@ p{
 
 
 - # <a id="flex" href="#catlog">flex</a> #
+
+## 案例一 ##
+```css
+/* 在這裡就會開始引用CSSReset，這裡不另做匯入，
+    詳情請參考CSS Reset & CSS Normalize說明 */
+.container {
+    width: 960px;
+    background-color: #be97fd;
+    margin: 10px auto;
+}
+
+.flexContainer {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.item {
+    width: 300px;
+    margin: 10px;
+    box-sizing: border-box;
+}
+
+.item h2 {
+    text-align: center;
+    font-size: 36px;
+}
+
+.item img {
+    width: 100%
+}
+
+.item p {
+    margin: 10px;
+}
+
+.flexItem {}
+```
+
+```html
+<div class="container flexContainer">
+    <div class="flexItem item"><img src="https://fakeimg.pl/300x200/ffffaa/" alt="">
+        <h2>Item1</h2>
+        <P>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloribus magnam incidunt similique, voluptatem
+            repellat fuga cumque harum laudantium possimus perspiciatis veniam necessitatibus nam, veritatis dolores
+            magni ipsam earum et corrupti.</P>
+    </div>
+    <div class="flexItem item"><img src="https://fakeimg.pl/300x200/ffffaa/" alt="">
+        <h2>Item2</h2>
+        <P>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloribus magnam incidunt similique, voluptatem
+            repellat fuga cumque harum laudantium possimus perspiciatis veniam necessitatibus nam, veritatis dolores
+            magni ipsam earum et corrupti.</P>
+    </div>
+    <div class="flexItem item"><img src="https://fakeimg.pl/300x200/ffffaa/" alt="">
+        <h2>Item3</h2>
+        <P>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloribus magnam incidunt similique, voluptatem
+            repellat fuga cumque harum laudantium possimus perspiciatis veniam necessitatibus nam, veritatis dolores
+            magni ipsam earum et corrupti.</P>
+    </div>
+    <div class="flexItem item"><img src="https://fakeimg.pl/300x200/ffffaa/" alt="">
+        <h2>Item4</h2>
+        <P>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloribus magnam incidunt similique, voluptatem
+            repellat fuga cumque harum laudantium possimus perspiciatis veniam necessitatibus nam, veritatis dolores
+            magni ipsam earum et corrupti.</P>
+    </div>
+    <div class="flexItem item"><img src="https://fakeimg.pl/300x200/ffffaa/" alt="">
+        <h2>Item5</h2>
+        <P>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloribus magnam incidunt similique, voluptatem
+            repellat fuga cumque harum laudantium possimus perspiciatis veniam necessitatibus nam, veritatis dolores
+            magni ipsam earum et corrupti.</P>
+    </div>
+    <div class="flexItem item"><img src="https://fakeimg.pl/300x200/ffffaa/" alt="">
+        <h2>Item6</h2>
+        <P>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloribus magnam incidunt similique, voluptatem
+            repellat fuga cumque harum laudantium possimus perspiciatis veniam necessitatibus nam, veritatis dolores
+            magni ipsam earum et corrupti.</P>
+    </div>
+</div>
+```
+
+<p class="description">這裡演示一個簡單的flex案例，flex跟float不同的地方，在於float是單一元素修改，常常要特別的撰寫才能達到內容融入的感覺，例如<a href="#floatCase1"><b>float案例</b></a>：一個有包含float的父元素，如果沒有其他內容，會讓父元素不認為有其float樣式子元素的存在，為了解決一個問題，我們需要多撰寫一個子元素，並讓它包含clear的樣式來解決這個問題．</p>
+
+{% blockquote <a href="/2020/06/26/CSS-flex-更進一步/" target="_blank">學習flex更進一步</a>  %}
+{% endblockquote %}
 
 - # <a id="position" href="#catlog">position</a> #
 
