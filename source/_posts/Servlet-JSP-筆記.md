@@ -89,13 +89,13 @@ tags:
 - # <a id="servlet" href="#catlog">Servlet</a> #
     ## <a id="servletLearnMap" href="#catlog"> Servlet學習地圖 </a> ##
     {% blockquote 圖1.1  Servlet類別關係圖  https://www.codejava.net/java-ee/servlet/uml-class-diagram-of-httpservlet-api source %}
-        ![ServletClass](HttpServletAPIUMLdiagram.png)
+        ![ServletClass](/image/Servlet-JSP-筆記/HttpServletAPIUMLdiagram.png)
     {% endblockquote %}
 
     <br/>
 
     {% blockquote 圖1.2 HttpServlet 類別圖 https://www.planttext.com/  writing from here %}
-        ![ServletClass](ServletClass.png)
+        ![ServletClass](/image/Servlet-JSP-筆記/ServletClass.png)
     {% endblockquote %}
     <!-- @startuml UML backup
     Servlet <|-- GenericServlet
@@ -158,7 +158,7 @@ tags:
     <br/>
 
     {% blockquote 圖1.3 HttpServletRequest 類別圖  https://www.codejava.net/java-ee/servlet/uml-class-diagram-of-httpservlet-api source  %}
-        ![ServletRequest](ServletRequest.png)
+        ![ServletRequest](/image/Servlet-JSP-筆記/ServletRequest.png)
     {% endblockquote %}
     <!-- 
     ServletRequest <|-- HttpServletRequest
@@ -184,7 +184,7 @@ tags:
     <br/>
 
     {% blockquote 圖1.4 HttpServletResponce 類別圖   https://www.codejava.net/java-ee/servlet/uml-class-diagram-of-httpservlet-api source  %}
-        ![ServletResponce](ServletResponce.png)
+        ![ServletResponce](/image/Servlet-JSP-筆記/ServletResponce.png)
     {% endblockquote %}
     <!-- 
     ServletRequest <|-- HttpServletRequest

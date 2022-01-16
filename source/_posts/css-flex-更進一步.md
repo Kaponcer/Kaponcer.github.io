@@ -33,7 +33,7 @@ tags:
 # <a id="flex-word-relation" href="#catlog">flex詞彙關係圖</a>  
 
 {% blockquote flex 詞彙表示圖 https://developer.mozilla.org/zh-TW/docs/Web/CSS/CSS_Flexible_Box_Layout/Using_CSS_flexible_boxes#%E5%BD%88%E6%80%A7%E7%9B%92%E5%AD%90%E7%9A%84%E5%AD%97%E5%BD%99 "MDN Developer" %}
-![flex詞彙表示圖](flex_terms.png)
+![flex詞彙表示圖](/image/css-flex-更進一步/flex_terms.png)
 {% endblockquote %}
 
 # 案例一
@@ -59,7 +59,7 @@ tags:
     flex-direction: row ; /*{ row | row-reverse | column | column-reverse }*/ 
 }
 ```
-![flex direction: row;](flex-direction-row.png)
+![flex direction: row;](/image/css-flex-更進一步/flex-direction-row.png)
 - ## flex-direction: row-reverse;
 ```css
 .container {
@@ -72,7 +72,7 @@ tags:
 }
 ```
 
-![flex direction: row-reverse;](flex-direction-row-reverse.png)
+![flex direction: row-reverse;](/image/css-flex-更進一步/flex-direction-row-reverse.png)
 - ## flex-direction: column;
 ```css
 .flexContainer {
@@ -83,7 +83,7 @@ tags:
     flex-direction: column ; /*{ row | row-reverse | column | column-reverse }*/ 
 }
 ```
-![flex direction: column;](flex-direction-column.png)
+![flex direction: column;](/image/css-flex-更進一步/flex-direction-column.png)
 - ## flex-direction: column-reverse;
 ```css
 .container {
@@ -96,4 +96,4 @@ tags:
     /* 到這裡*/
 }
 ```
-![flex direction: column-reverse;](flex-direction-column-reverse.png)
+![flex direction: column-reverse;](/image/css-flex-更進一步/flex-direction-column-reverse.png)

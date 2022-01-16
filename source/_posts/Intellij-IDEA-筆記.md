@@ -51,37 +51,37 @@ tags:
     - ## <a id="webProjectCreate"  href="#catlog"> 建立 </a> ##
         1. File -> New -> Project
         {% blockquote 圖1.1 建立新的web專案  %}
-        ![NewWebProject](NewWebProject.png)
+        ![NewWebProject](/image/Intellij-IDEA-筆記/NewWebProject.png)
         {% endblockquote %}
         <br/>
         {% blockquote 圖1.2 設定專案名稱 %}
-        ![NewWebProjectName.png](NewWebProjectName.png)
+        ![NewWebProjectName.png](/image/Intellij-IDEA-筆記/NewWebProjectName.png)
         {% endblockquote %}
         <br/>
     - ## <a id="webProjectDeploy"  href="#catlog"> 部屬 </a> ##
         1. Run -> Edit Configurations...
         {% blockquote 圖1.3 以tomcat為例，設定前畫面，請點選右上角的Create configuration %}
-        ![tomcatConfig1](tomcatConfig1.png)
+        ![tomcatConfig1](/image/Intellij-IDEA-筆記/tomcatConfig1.png)
         {% endblockquote %}
         <br/>
         {% blockquote 圖1.4 Server頁面，紅框的地方請記得設定 %}
-        ![tomcatConfig2](tomcatConfig2.png)
+        ![tomcatConfig2](/image/Intellij-IDEA-筆記/tomcatConfig2.png)
         {% endblockquote %}
         <br/>
         <p class="description"> 姑且說一下，從最上面的紅框是設定這個設定的名稱，舉例來說，在測試環境中可能會選擇tomcat Server進行部屬，但是最後部屬可能不會在本地，應該說大多得情況都不是在本地。所以根據不同情況有可能會有一堆部屬設定檔． 第二個紅框是設定tomcat程式的所在地．第三個是設定JRE環境．(有種講廢話的感覺)</p>
 
         {% blockquote 圖1.5 Deployment頁面，旁邊的＋點選後選擇Artifact.. %}
-        ![tomcatConfig3](tomcatConfig3.png)
+        ![tomcatConfig3](/image/Intellij-IDEA-筆記/tomcatConfig3.png)
         {% endblockquote %}
         <br/>
         {% blockquote 圖1.6 Deployment頁面，這時候出現預設的部屬內容，可以再看Server頁面那邊看也有些變化（請先不要改）．看了之後記一下那裡變了，之後就點選下面的OK %}
-        ![tomcatConfig4](tomcatConfig4.png)
+        ![tomcatConfig4](/image/Intellij-IDEA-筆記/tomcatConfig4.png)
         {% endblockquote %}
         <br/>
     - ## <a id="webProjectStart"  href="#catlog"> 啟動 </a> ##
         1. Run -> Run 'Sample'
         {% blockquote 圖1.7 如果沒意外的話應該瀏覽器會跳出標題為 $TITLE$ 內文 $END$的畫面 %}
-        ![start Project](start.png)
+        ![start Project](/image/Intellij-IDEA-筆記/start.png)
         {% endblockquote %}
         <br/>
         在這裡可能會出現一個問題，有些瀏覽器強制HTTPS連線，而現在的情況卻只能HTTP連線而已.
@@ -93,20 +93,20 @@ tags:
         keytool -genkey -alias tomcat -keyalg RSA -storepass StorePassword -keystore localhost-rsa.jks
         ```
         {% blockquote 圖1.8 實際產生key畫面 %}
-        ![genSSLkey](genSSLkey.png)
+        ![genSSLkey](/image/Intellij-IDEA-筆記/genSSLkey.png)
         {% endblockquote %}<br/>
         <p class="description"><strong>在這裡要注意我是把localhost-rsa.jks放在tomcat/conf/資料夾下</strong></p>
         2. 編輯server.xml檔案，開啟HTTPS服務
         {% blockquote 圖1.9 編輯tomcat/conf/server.xml %}
-        ![configServer.xml](configServerxml.png)
+        ![configServer.xml](/image/Intellij-IDEA-筆記/configServerxml.png)
         {% endblockquote %}<br/>
         3. 設定Port
         {% blockquote 圖1.10 IDE 設定部分 %}
-        ![configPortInIDE.xml](configPortInIDE.png)
+        ![configPortInIDE.xml](/image/Intellij-IDEA-筆記/configPortInIDE.png)
         {% endblockquote %}<br/>
         <p>這裡設定兩個地方，先將原本的http改成https，再來我這邊Chrome不認localhost來源的憑證，還好有127.0.0.1可以用，如果是firefox就可以用Localhost，不過要加入例外清單；第二個設定的地方是將8443port加入https上</p>
         {% blockquote 圖1.11 成果 %}
-        ![httpsSccess](httpsSccess.png)
+        ![httpsSccess](/image/Intellij-IDEA-筆記/httpsSccess.png)
         {% endblockquote %}<br/>
         {% blockquote 生成自簽憑證-參考資料 https://tomcat.apache.org/tomcat-9.0-doc/ssl-howto.html self-signed certificate %}
         {% endblockquote %}<br/>
