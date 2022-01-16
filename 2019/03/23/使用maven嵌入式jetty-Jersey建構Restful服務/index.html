@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>使用maven嵌入式jetty+Jersey建構Restful服務 | 精 簡</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="情境目前用嵌入式jetty練習Servlet，在學習過程中發現Restful 服務這個名詞，並發現這個Jersey這個實作服務．這個筆記紀錄如何使用Jersey，在嵌入式jetty搭建Restful api服務．">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用maven嵌入式jetty+Jersey建構Restful服務">
+<meta property="og:url" content="https://kaponcer.github.io/index.html/2019/03/23/%E4%BD%BF%E7%94%A8maven%E5%B5%8C%E5%85%A5%E5%BC%8Fjetty-Jersey%E5%BB%BA%E6%A7%8BRestful%E6%9C%8D%E5%8B%99/index.html">
+<meta property="og:site_name" content="精 簡">
+<meta property="og:description" content="情境目前用嵌入式jetty練習Servlet，在學習過程中發現Restful 服務這個名詞，並發現這個Jersey這個實作服務．這個筆記紀錄如何使用Jersey，在嵌入式jetty搭建Restful api服務．">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2019-03-23T03:57:34.000Z">
+<meta property="article:modified_time" content="2022-01-16T08:55:16.695Z">
+<meta property="article:author" content="Kaponcer">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="maven">
+<meta property="article:tag" content="jetty">
+<meta property="article:tag" content="embeded">
+<meta property="article:tag" content="jersey">
+<meta property="article:tag" content="restful">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/index.html/atom.xml" title="精 簡" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/index.html/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/index.html/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/index.html/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/index.html/" id="logo">精 簡</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/index.html/" id="subtitle">個人筆記部落格</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/index.html/">Home</a>
+        
+          <a class="main-nav-link" href="/index.html/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/index.html/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜尋"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜尋"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://kaponcer.github.io/index.html"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-使用maven嵌入式jetty-Jersey建構Restful服務" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/index.html/2019/03/23/%E4%BD%BF%E7%94%A8maven%E5%B5%8C%E5%85%A5%E5%BC%8Fjetty-Jersey%E5%BB%BA%E6%A7%8BRestful%E6%9C%8D%E5%8B%99/" class="article-date">
+  <time class="dt-published" datetime="2019-03-23T03:57:34.000Z" itemprop="datePublished">2019-03-23</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/index.html/categories/java/">Java</a>►<a class="article-category-link" href="/index.html/categories/java/webservice/">WebService</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      使用maven嵌入式jetty+Jersey建構Restful服務
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="情境"><a href="#情境" class="headerlink" title="情境"></a>情境</h2><p>目前用嵌入式jetty練習Servlet，在學習過程中發現Restful 服務這個名詞，並發現這個Jersey這個實作服務．<br>這個筆記紀錄如何使用Jersey，在嵌入式jetty搭建Restful api服務．</p>
+<span id="more"></span>
+
+<h2 id="環境"><a href="#環境" class="headerlink" title="環境"></a>環境</h2><ol>
+<li>jetty 9.4.15</li>
+<li>Jersey 2.28</li>
+<li>Java 1.8</li>
+</ol>
+<h2 id="步驟"><a href="#步驟" class="headerlink" title="步驟"></a>步驟</h2><ol>
+<li><p>在pom.xml設定相關要下載的套件</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-server --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.eclipse.jetty<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jetty-server<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>9.4.15.v20190215<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-servlet --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.eclipse.jetty<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jetty-servlet<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>9.4.15.v20190215<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/org.glassfish.jersey.containers/jersey-container-servlet --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.glassfish.jersey.containers<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jersey-container-servlet<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>2.28<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.glassfish.jersey.inject<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jersey-hk2<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>2.28<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>建立伺服器</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Server server = <span class="keyword">new</span> Server();</span><br><span class="line">ServerConnector http = <span class="keyword">new</span> ServerConnector(server);</span><br><span class="line">http.setHost(<span class="string">&quot;localhost&quot;</span>);</span><br><span class="line">http.setPort(<span class="number">8080</span>);</span><br><span class="line">http.setIdleTimeout(<span class="number">30000</span>);</span><br><span class="line">server.addConnector(http);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 配置靜態網頁Handler</span></span><br><span class="line">ServletContextHandler context = <span class="keyword">new</span> ServletContextHandler(ServletContextHandler.NO_SESSIONS);</span><br><span class="line">context.setContextPath(<span class="string">&quot;/&quot;</span>);</span><br><span class="line">context.setWelcomeFiles(<span class="keyword">new</span> String[] &#123; <span class="string">&quot;index.html&quot;</span> &#125;);</span><br><span class="line"></span><br><span class="line">ServletHolder def = context.addServlet(DefaultServlet.class, <span class="string">&quot;/&quot;</span>);</span><br><span class="line">def.setInitParameter(<span class="string">&quot;resourceBase&quot;</span>, <span class="string">&quot;./http/&quot;</span>);</span><br><span class="line">def.setInitParameter(<span class="string">&quot;dirAllowed&quot;</span>, <span class="string">&quot;false&quot;</span>);</span><br></pre></td></tr></table></figure></li>
+</ol>
+<ol start="3">
+<li>設定Restful api相關配置<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// api 提供的路徑</span></span><br><span class="line">ServletHolder apiHolder = context.addServlet(ServletContainer.class, <span class="string">&quot;/api/*&quot;</span>);</span><br><span class="line">apiHolder.setInitOrder(<span class="number">1</span>);</span><br><span class="line"><span class="comment">// 提供api的packagex路徑</span></span><br><span class="line">apiHolder.setInitParameter(<span class="string">&quot;jersey.config.server.provider.packages&quot;</span>, </span><br><span class="line">			<span class="string">&quot;idv.kaponcer.RoEAnalyze.model.api&quot;</span>);</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 也可以單獨載入類別</span></span><br><span class="line"><span class="comment">* jerseyServlet.setInitParameter(&quot;jersey.config.server.provider.classnames&quot;,</span></span><br><span class="line"><span class="comment">   *           &quot;UploadFileService;Packege.className&quot;);</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">HandlerList handlers = <span class="keyword">new</span> HandlerList();</span><br><span class="line">handlers.addHandler(context);</span><br><span class="line"></span><br><span class="line">server.setHandler(handlers);</span><br></pre></td></tr></table></figure>
+<h2 id="備份筆記"><a href="#備份筆記" class="headerlink" title="備份筆記"></a>備份筆記</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 筆記備份,來源至底</span></span><br><span class="line">	Server jettyServer = <span class="keyword">new</span> Server();</span><br><span class="line">	HttpConfiguration http_config = <span class="keyword">new</span> HttpConfiguration();</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 *http_config可以对服务器进行配置，比如设置https,BufferSize等等</span></span><br><span class="line"><span class="comment">	 *        http_config.setSecureScheme(&quot;https&quot;);</span></span><br><span class="line"><span class="comment">	 *        http_config.setSecurePort(8443);</span></span><br><span class="line"><span class="comment">	 *        http_config.setOutputBufferSize(32768);</span></span><br><span class="line"><span class="comment">	 *        http_config.setRequestHeaderSize(8192);</span></span><br><span class="line"><span class="comment">	 *        http_config.setResponseHeaderSize(8192);</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	http_config.setSendServerVersion(<span class="keyword">true</span>);</span><br><span class="line">	http_config.setSendDateHeader(<span class="keyword">false</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 新建http连接来设置访问端口，超时时间等等。</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	ServerConnector httpServer = <span class="keyword">new</span> ServerConnector(jettyServer,</span><br><span class="line">			<span class="keyword">new</span> HttpConnectionFactory(http_config));</span><br><span class="line">	httpServer.setPort(<span class="number">7012</span>);</span><br><span class="line">	httpServer.setIdleTimeout(<span class="number">120000</span>);</span><br><span class="line">	jettyServer.addConnector(httpServer);</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 设置整个web服务的根url，/ 表示 localhost:7012/  之后地址的是可访问的</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	ServletContextHandler context = <span class="keyword">new</span> ServletContextHandler(ServletContextHandler.SESSIONS);</span><br><span class="line">	context.setContextPath(<span class="string">&quot;/&quot;</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 添加动态servlet路径，处理我们自己写的动态的servlet</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	ServletHolder jerseyServlet = context.addServlet(</span><br><span class="line">			org.glassfish.jersey.servlet.ServletContainer.class, <span class="string">&quot;/webapi/*&quot;</span>);</span><br><span class="line">	jerseyServlet.setInitOrder(<span class="number">1</span>);</span><br><span class="line">	<span class="comment">// Tells the Jersey Servlet which REST api/class to load.设置动态servlt加载的包</span></span><br><span class="line">	jerseyServlet.setInitParameter(<span class="string">&quot;jersey.config.server.provider.packages&quot;</span>, <span class="string">&quot;com.heu.cs.api&quot;</span>);</span><br><span class="line">	<span class="comment">//也可单独设置加载某个类，</span></span><br><span class="line">	 jerseyServlet.setInitParameter(<span class="string">&quot;jersey.config.server.provider.classnames&quot;</span>,</span><br><span class="line">			<span class="string">&quot;UploadFileService;org.glassfish.jersey.media.multipart.MultiPartFeature&quot;</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 添加默认的servlet路径，处理不在动态servlet路径中的地址，一般都是一些可供访问的静态html,css,js资源文件</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	ServletHolder staticServlet = context.addServlet(DefaultServlet.class, <span class="string">&quot;/static/*&quot;</span>);</span><br><span class="line">	staticServlet.setInitParameter(<span class="string">&quot;resourceBase&quot;</span>, <span class="string">&quot;src/main/resources&quot;</span>);</span><br><span class="line">	staticServlet.setInitParameter(<span class="string">&quot;pathInfoOnly&quot;</span>, <span class="string">&quot;true&quot;</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * Embedded Jetty还可以直接当作服务器，在上面部署已经发布的war包，这方面的资料国内挺多的，就不累述</span></span><br><span class="line"><span class="comment">	 * </span></span><br><span class="line"><span class="comment">	 * 其次，在我们的项目中是没有用到web.xml文件来进行webappde的配置，因为上面的设置并不能使得服务器访问web.xml，</span></span><br><span class="line"><span class="comment">	 * 如果需要用到web.xml，则需要new一个WebAppContext,并对其进行配置，同时在下面的handlers中加上webAppContext</span></span><br><span class="line"><span class="comment">	 *  WebAppContext webAppContext = new WebAppContext();</span></span><br><span class="line"><span class="comment">	 *  设置描述符位置</span></span><br><span class="line"><span class="comment">	 *  webAppContext.setDescriptor(&quot;./web/WEB-INF/web.xml&quot;);</span></span><br><span class="line"><span class="comment">	 *  设置Web内容上下文路径</span></span><br><span class="line"><span class="comment">	 *  webAppContext.setResourceBase(&quot;./web&quot;);</span></span><br><span class="line"><span class="comment">	 *  设置上下文路径</span></span><br><span class="line"><span class="comment">	 *  webAppContext.setContextPath(&quot;/&quot;);</span></span><br><span class="line"><span class="comment">	 *  webAppContext.setParentLoaderPriority(true);</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	</span><br><span class="line">	HandlerCollection handlers = <span class="keyword">new</span> HandlerCollection();</span><br><span class="line">	<span class="comment">// handlers.setHandlers(new Handler[]&#123;context,webAppContext&#125;);</span></span><br><span class="line">	handlers.setHandlers(<span class="keyword">new</span> Handler[]&#123;context&#125;);</span><br><span class="line">	jettyServer.setHandler(handlers);</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		jettyServer.start();</span><br><span class="line">		jettyServer.join();</span><br><span class="line">	&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">		jettyServer.destroy();</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="來源"><a href="#來源" class="headerlink" title="來源"></a>來源</h2><p>Jetty 官方文件 用來看基本的範例<br>(這是快照版本的說明，個人感覺比正式版好看一點，如果被官方砍掉了就只能看正式版的文件)</p>
+<a href="https://www.eclipse.org/jetty/documentation/9.4.x/embedding-jetty.html" title="" target="">Embedding-Jetty</a>
+
+
+<p>大陸的程序員撰寫的教學，關於嵌入式Jetty+Jersey Restful服務</p>
+<a href="https://www.jianshu.com/p/764fcdffc28a" title="" target="">IDEA+Maven+Embedded Jetty+Jersey构建Restful服务并打包成jar包发布</a>
+
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://kaponcer.github.io/index.html/2019/03/23/%E4%BD%BF%E7%94%A8maven%E5%B5%8C%E5%85%A5%E5%BC%8Fjetty-Jersey%E5%BB%BA%E6%A7%8BRestful%E6%9C%8D%E5%8B%99/" data-id="ckyh6d4u7001xcgzw6v7j1ac0" data-title="使用maven嵌入式jetty+Jersey建構Restful服務" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/index.html/tags/embeded/" rel="tag">embeded</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/index.html/tags/java/" rel="tag">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/index.html/tags/jersey/" rel="tag">jersey</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/index.html/tags/jetty/" rel="tag">jetty</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/index.html/tags/maven/" rel="tag">maven</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/index.html/tags/restful/" rel="tag">restful</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/index.html/2020/06/12/%E5%82%99%E4%BB%BDHexo/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          備份Hexo
+        
+      </div>
+    </a>
+  
+  
+    <a href="/index.html/2019/03/21/list%E8%BD%89array/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">list轉array</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分類</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/index.html/categories/java/">Java</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/index.html/categories/java/classcastexception/">ClassCastException</a></li><li class="category-list-item"><a class="category-list-link" href="/index.html/categories/java/ide/">IDE</a></li><li class="category-list-item"><a class="category-list-link" href="/index.html/categories/java/web/">Web</a></li><li class="category-list-item"><a class="category-list-link" href="/index.html/categories/java/webservice/">WebService</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/index.html/categories/database/">database</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/index.html/categories/database/h2/">H2</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/index.html/categories/editor/">editor</a></li><li class="category-list-item"><a class="category-list-link" href="/index.html/categories/git/">git</a></li><li class="category-list-item"><a class="category-list-link" href="/index.html/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/index.html/categories/html/">html</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/index.html/categories/html/css/">css</a></li><li class="category-list-item"><a class="category-list-link" href="/index.html/categories/html/question/">question</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/index.html/categories/leetcode/">leetcode</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/index.html/categories/leetcode/1-array/">1.array</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/index.html/categories/leetcode/1-array/easy/">easy</a></li><li class="category-list-item"><a class="category-list-link" href="/index.html/categories/leetcode/1-array/medium/">medium</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/index.html/categories/leetcode/easy/">easy</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/index.html/categories/leetcode/easy/461-hamming-distance/">461. Hamming Distance</a></li><li class="category-list-item"><a class="category-list-link" href="/index.html/categories/leetcode/easy/617-merge-two-binary-trees/">617. Merge Two Binary Trees</a></li><li class="category-list-item"><a class="category-list-link" href="/index.html/categories/leetcode/easy/709-to-lower-case/">709. To Lower Case</a></li><li class="category-list-item"><a class="category-list-link" href="/index.html/categories/leetcode/easy/771-jewels-and-stones/">771. Jewels and Stones</a></li><li class="category-list-item"><a class="category-list-link" href="/index.html/categories/leetcode/easy/929-unique-email-addresses/">929. Unique Email Addresses</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/index.html/categories/leetcode/hard/">hard</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/index.html/categories/leetcode/hard/980-unique-paths-iii/">980. Unique Paths III</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/index.html/categories/leetcode/medium/">medium</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/index.html/categories/leetcode/medium/807-max-increase-to-keep-city-skyline/">807. Max Increase to Keep City Skyline</a></li><li class="category-list-item"><a class="category-list-link" href="/index.html/categories/leetcode/medium/938-range-sum-of-bst/">938. Range Sum of BST</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/index.html/categories/linux/">linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/index.html/categories/linux/debian/">Debian</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/index.html/categories/linux/debian/ubuntu/">Ubuntu</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/index.html/categories/%E8%B3%87%E6%BA%90/">資源</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/index.html/categories/%E8%B3%87%E6%BA%90/%E6%95%99%E8%82%B2/">教育</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/index.html/categories/%E8%BB%9F%E9%AB%94%E9%96%8B%E7%99%BC/">軟體開發</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">標籤</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/26-remove-duplicates-from-sorted-array/" rel="tag">26. Remove Duplicates from Sorted Array</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/27-remove-element/" rel="tag">27. Remove Element</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/461/" rel="tag">461</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/617/" rel="tag">617</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/709/" rel="tag">709</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/771/" rel="tag">771</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/80-remove-duplicates-from-sorted-array-ii/" rel="tag">80. Remove Duplicates from Sorted Array II</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/807/" rel="tag">807</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/929/" rel="tag">929</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/classcastexception/" rel="tag">ClassCastException</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/debian/" rel="tag">Debian</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/h2/" rel="tag">H2</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/hamming-distance/" rel="tag">Hamming Distance</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/ide/" rel="tag">IDE</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/jewels-and-stones/" rel="tag">Jewels and Stones</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/max-increase-to-keep-city-skyline/" rel="tag">Max Increase to Keep City Skyline</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/merge-two-binary-trees/" rel="tag">Merge Two Binary Trees</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/range-sum-of-bst/" rel="tag">Range Sum of BST</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/to-lower-case/" rel="tag">To Lower Case</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/unique-email-addresses/" rel="tag">Unique Email Addresses</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/unique-paths-iii/" rel="tag">Unique Paths III</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/vscode/" rel="tag">VSCode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/array/" rel="tag">array</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/css/" rel="tag">css</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/database/" rel="tag">database</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/easy/" rel="tag">easy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/eclipse/" rel="tag">eclipse</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/embeded/" rel="tag">embeded</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/flex/" rel="tag">flex</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/frame/" rel="tag">frame</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/frameset/" rel="tag">frameset</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/git/" rel="tag">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/github/" rel="tag">github</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/hard/" rel="tag">hard</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/html/" rel="tag">html</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/iframe/" rel="tag">iframe</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/javascript/" rel="tag">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/jersey/" rel="tag">jersey</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/jetty/" rel="tag">jetty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/jquery/" rel="tag">jquery</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/jsoup/" rel="tag">jsoup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/list/" rel="tag">list</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/markdown/" rel="tag">markdown</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/maven/" rel="tag">maven</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/medium/" rel="tag">medium</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/next-theme/" rel="tag">next theme</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/restful/" rel="tag">restful</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/tarball/" rel="tag">tarball</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/ubuntu/" rel="tag">ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/web/" rel="tag">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/%E5%89%8D%E7%AB%AF/" rel="tag">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/%E5%8F%B0%E7%81%A3%E9%8A%80%E8%A1%8C/" rel="tag">台灣銀行</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/%E5%AD%B8%E7%BF%92/" rel="tag">學習</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/%E6%9C%AA%E5%AE%8C%E5%85%A8/" rel="tag">未完全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/%E7%B6%B2%E7%AB%99/" rel="tag">網站</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/%E7%BE%8E%E9%87%91/" rel="tag">美金</a></li><li class="tag-list-item"><a class="tag-list-link" href="/index.html/tags/%E9%80%B2%E8%A1%8C%E4%B8%AD%E7%9A%84%E5%B0%88%E6%A1%88/" rel="tag">進行中的專案</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">標籤雲</h3>
+    <div class="widget tagcloud">
+      <a href="/index.html/tags/26-remove-duplicates-from-sorted-array/" style="font-size: 10px;">26. Remove Duplicates from Sorted Array</a> <a href="/index.html/tags/27-remove-element/" style="font-size: 10px;">27. Remove Element</a> <a href="/index.html/tags/461/" style="font-size: 10px;">461</a> <a href="/index.html/tags/617/" style="font-size: 10px;">617</a> <a href="/index.html/tags/709/" style="font-size: 10px;">709</a> <a href="/index.html/tags/771/" style="font-size: 10px;">771</a> <a href="/index.html/tags/80-remove-duplicates-from-sorted-array-ii/" style="font-size: 10px;">80. Remove Duplicates from Sorted Array II</a> <a href="/index.html/tags/807/" style="font-size: 10px;">807</a> <a href="/index.html/tags/929/" style="font-size: 10px;">929</a> <a href="/index.html/tags/classcastexception/" style="font-size: 10px;">ClassCastException</a> <a href="/index.html/tags/debian/" style="font-size: 10px;">Debian</a> <a href="/index.html/tags/h2/" style="font-size: 11.67px;">H2</a> <a href="/index.html/tags/hamming-distance/" style="font-size: 10px;">Hamming Distance</a> <a href="/index.html/tags/ide/" style="font-size: 10px;">IDE</a> <a href="/index.html/tags/jewels-and-stones/" style="font-size: 10px;">Jewels and Stones</a> <a href="/index.html/tags/max-increase-to-keep-city-skyline/" style="font-size: 10px;">Max Increase to Keep City Skyline</a> <a href="/index.html/tags/merge-two-binary-trees/" style="font-size: 10px;">Merge Two Binary Trees</a> <a href="/index.html/tags/range-sum-of-bst/" style="font-size: 10px;">Range Sum of BST</a> <a href="/index.html/tags/to-lower-case/" style="font-size: 10px;">To Lower Case</a> <a href="/index.html/tags/unique-email-addresses/" style="font-size: 10px;">Unique Email Addresses</a> <a href="/index.html/tags/unique-paths-iii/" style="font-size: 10px;">Unique Paths III</a> <a href="/index.html/tags/vscode/" style="font-size: 10px;">VSCode</a> <a href="/index.html/tags/array/" style="font-size: 15px;">array</a> <a href="/index.html/tags/css/" style="font-size: 11.67px;">css</a> <a href="/index.html/tags/database/" style="font-size: 10px;">database</a> <a href="/index.html/tags/easy/" style="font-size: 16.67px;">easy</a> <a href="/index.html/tags/eclipse/" style="font-size: 10px;">eclipse</a> <a href="/index.html/tags/embeded/" style="font-size: 10px;">embeded</a> <a href="/index.html/tags/flex/" style="font-size: 10px;">flex</a> <a href="/index.html/tags/frame/" style="font-size: 10px;">frame</a> <a href="/index.html/tags/frameset/" style="font-size: 10px;">frameset</a> <a href="/index.html/tags/git/" style="font-size: 10px;">git</a> <a href="/index.html/tags/github/" style="font-size: 13.33px;">github</a> <a href="/index.html/tags/hard/" style="font-size: 10px;">hard</a> <a href="/index.html/tags/hexo/" style="font-size: 11.67px;">hexo</a> <a href="/index.html/tags/html/" style="font-size: 11.67px;">html</a> <a href="/index.html/tags/iframe/" style="font-size: 10px;">iframe</a> <a href="/index.html/tags/java/" style="font-size: 18.33px;">java</a> <a href="/index.html/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/index.html/tags/jersey/" style="font-size: 10px;">jersey</a> <a href="/index.html/tags/jetty/" style="font-size: 11.67px;">jetty</a> <a href="/index.html/tags/jquery/" style="font-size: 10px;">jquery</a> <a href="/index.html/tags/jsoup/" style="font-size: 10px;">jsoup</a> <a href="/index.html/tags/leetcode/" style="font-size: 20px;">leetcode</a> <a href="/index.html/tags/linux/" style="font-size: 11.67px;">linux</a> <a href="/index.html/tags/list/" style="font-size: 10px;">list</a> <a href="/index.html/tags/markdown/" style="font-size: 11.67px;">markdown</a> <a href="/index.html/tags/maven/" style="font-size: 11.67px;">maven</a> <a href="/index.html/tags/medium/" style="font-size: 13.33px;">medium</a> <a href="/index.html/tags/next-theme/" style="font-size: 11.67px;">next theme</a> <a href="/index.html/tags/restful/" style="font-size: 10px;">restful</a> <a href="/index.html/tags/tarball/" style="font-size: 10px;">tarball</a> <a href="/index.html/tags/ubuntu/" style="font-size: 10px;">ubuntu</a> <a href="/index.html/tags/web/" style="font-size: 10px;">web</a> <a href="/index.html/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 13.33px;">前端</a> <a href="/index.html/tags/%E5%8F%B0%E7%81%A3%E9%8A%80%E8%A1%8C/" style="font-size: 10px;">台灣銀行</a> <a href="/index.html/tags/%E5%AD%B8%E7%BF%92/" style="font-size: 10px;">學習</a> <a href="/index.html/tags/%E6%9C%AA%E5%AE%8C%E5%85%A8/" style="font-size: 10px;">未完全</a> <a href="/index.html/tags/%E7%B6%B2%E7%AB%99/" style="font-size: 10px;">網站</a> <a href="/index.html/tags/%E7%BE%8E%E9%87%91/" style="font-size: 10px;">美金</a> <a href="/index.html/tags/%E9%80%B2%E8%A1%8C%E4%B8%AD%E7%9A%84%E5%B0%88%E6%A1%88/" style="font-size: 10px;">進行中的專案</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">彙整</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/index.html/archives/2020/06/">六月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/index.html/archives/2019/03/">三月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/index.html/archives/2019/02/">二月 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/index.html/2020/06/26/css-flex-%E6%9B%B4%E9%80%B2%E4%B8%80%E6%AD%A5/">CSS flex 更進一步</a>
+          </li>
+        
+          <li>
+            <a href="/index.html/2020/06/23/leetcode-80/">leetcode-80</a>
+          </li>
+        
+          <li>
+            <a href="/index.html/2020/06/23/leetcode-26/">leetcode#26</a>
+          </li>
+        
+          <li>
+            <a href="/index.html/2020/06/22/leetcode-27/">leetcode#27</a>
+          </li>
+        
+          <li>
+            <a href="/index.html/2020/06/21/Intellij-IDEA-%E7%AD%86%E8%A8%98/">Intellij IDEA 筆記</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 Kaponcer<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/index.html/" class="mobile-nav-link">Home</a>
+  
+    <a href="/index.html/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/index.html/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/index.html/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/index.html/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
