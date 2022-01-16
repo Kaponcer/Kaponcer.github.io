@@ -101,4 +101,4 @@ theme: next7
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: https://github.com/Kaponcer/Kaponcer.github.io.git
+  repo: git@github.com:Kaponcer/Kaponcer.github.io.git
